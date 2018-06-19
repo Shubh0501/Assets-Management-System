@@ -28,11 +28,12 @@ class Authentication:
 
     def reg(self, name, email, phone, password):
         user = User(name, email, phone, password)
-        result = user.save()
-        if result is None:
-            return False
-        else:
+        try :
+            user.save()
             return True
+        except NotUniqueError:
+            return False
+
 
     def login(self, phone, password):
 
