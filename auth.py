@@ -23,14 +23,14 @@ class Authentication:
             connect(db=dbname, host=host, port=port)
         else:
             connect(db=dbname, host=host, port=port, username=username, password=password)
-
-    def reg(self, name, Personal_number, password):
-        user = User(name, Personal_number, password)
-        result = user.save()
-        if result is None:
-            return False
-        else:
+    def reg(self, name, email, phone, password):
+        user = User(name, email, phone, password)
+        try :
+            user.save()
             return True
+        except NotUniqueError:
+            return False
+
 
     def login(self, Personal_number, password):
 
