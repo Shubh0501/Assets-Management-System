@@ -8,7 +8,7 @@ if __name__ == '__main__':
     if newAuth.reg("Himanshu", "himanshu10nain@gmail.com", "7042856750", "password"):
         print("User Created")
     else:
-        print("User Creation Error")
+        print("User Data Not Unique.")
 
     if newAuth.login("7042856750", "password"):
         print("Login Successful")
