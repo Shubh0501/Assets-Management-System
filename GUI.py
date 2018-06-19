@@ -5,6 +5,7 @@ from gi.repository import Gtk
 from pymongo import MongoClient
 import auth
 
+newAuth = auth.Authentication("localhost", 27017, 'user_database', None, None)
 
 class Main_Window(Gtk.Window):
     
@@ -56,9 +57,6 @@ class Main_Window(Gtk.Window):
             dialog_details.destroy()
             return
         else:
-            conn = MongoClient(host="localhost", port=27017)
-            db = conn.database
-            newAuth = auth.Authentication("localhost", 27017, 'user_database', None, None)
             check = newAuth.login(self.username.get_text(), self.password.get_text())
 
             if check == True:
@@ -144,17 +142,14 @@ class New_account(Gtk.Window):
             dialog_error.destroy()
             return
         else:
-            conn = MongoClient(host="localhost", port= 27017)
-            db = conn.database
-            collection = db.user_database
 
-            temp_rec = {
-                "Personal Number":self.personal_number.get_text(),
-                "Name":self.name.get_text(),
-                "Password":self.password.get_text()
-            }
+            result = newAuth.reg(self.name.get_text(),self.personal_number.get_text(),self.password.get_text())
 
-            collection.insert_one(temp_rec)
+            if result:
+                print ("registrations successful")
+            else:
+                print ("registration failed")
+
             self.destroy()
             dialog_created_account = Account_created(self)
             response = dialog_created_account.run()
