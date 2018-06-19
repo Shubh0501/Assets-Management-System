@@ -1,20 +1,18 @@
 from mongoengine import *
 
 class User(Document):
-    email = EmailField(required=True, unique=True)
     name = StringField(required=True)
-    phone = StringField(required=True, max_length=10, unique=True)
+    Personal_number = StringField(required=True, max_length=10, unique=True)
     password = StringField(required=True)
 
-    def __init__(self, name, email, phone, password, *args, **values):
+    def __init__(self, name, Personal_number, password, *args, **values):
         super(User, self).__init__(*args, **values)
         self.name = name
-        self.email = email
-        self.phone = phone
+        self.Personal_number = Personal_number
         self.password = password
 
     def __str__(self):
-        return self.name + "--" + self.email + "--" + self.phone
+        return self.name + "--"  + "--" + self.Personal_number
 
 
 class Authentication:
@@ -25,7 +23,6 @@ class Authentication:
             connect(db=dbname, host=host, port=port)
         else:
             connect(db=dbname, host=host, port=port, username=username, password=password)
-
     def reg(self, name, email, phone, password):
         user = User(name, email, phone, password)
         try :
@@ -35,9 +32,9 @@ class Authentication:
             return False
 
 
-    def login(self, phone, password):
+    def login(self, Personal_number, password):
 
-        user = User.objects.get(phone=phone)
+        user = User.objects.get(Personal_number=Personal_number)
 
         if user is None:
             return False

@@ -3,7 +3,7 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from pymongo import MongoClient
-
+import auth
 
 
 class Main_Window(Gtk.Window):
@@ -58,22 +58,16 @@ class Main_Window(Gtk.Window):
         else:
             conn = MongoClient(host="localhost", port=27017)
             db = conn.database
-            per_num_finder = db.user_database.find({"Personal Number":self.username.get_text()})
-            print(str(per_num_finder))
-            if per_num_finder is None:
-                dialog_details = Details(self)
-                response = dialog_details.run()
+            newAuth = auth.Authentication("localhost", 27017, 'user_database', None, None)
+            check = newAuth.login(self.username.get_text(), self.password.get_text())
 
-                dialog_details.destroy()
+            if check == True:
+                print("Login Successfull")
                 return
             else:
-                pass_finder = per_num_finder[2]
-                if pass_finder == self.password.get_text():
-                    print("Login Successfull")
-                    return
-                else:
-                    print("Error")
-                    return
+                print("Login Error")
+                return
+
 
 
     def create_account_clicked(self, widget):
