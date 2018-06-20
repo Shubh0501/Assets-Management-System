@@ -2,6 +2,7 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 import auth
+import datetime
 
 newAuth = auth.Authentication("localhost", 27017, 'user_database', None, None)
 
@@ -504,21 +505,37 @@ class Schedule_service(Gtk.Window):
         self.vbox_right.pack_start(self.code, True, True, 3)
         self.date_label = Gtk.Label("PM Date")
         self.date = Gtk.Entry()
+        self.date.set_text("yyyy/mm/dd")
         self.vbox_right.pack_start(self.date_label, True, True, 3)
         self.vbox_right.pack_start(self.date, True, True, 3)
         self.next_date_label = Gtk.Label("Next PM Date")
         self.vbox_right.pack_start(self.next_date_label, True, True, 3)
         self.next_date = Gtk.Entry()
+        self.next_date.set_text("yyyy/mm/dd")
         self.vbox_right.pack_start(self.next_date, True, True, 3)
 
+        self.calculate = Gtk.Button("Calculate")
         self.save_button = Gtk.Button("Save")
         self.cancel_button = Gtk.Button("Cancel")
+        self.vbox_right.pack_start(self.calculate, True, True, 3)
         self.vbox_right.pack_start(self.save_button, True, True, 3)
         self.vbox_right.pack_start(self.cancel_button, True, True, 3)
+        self.calculate.connect("clicked", self.Calculate)
         self.save_button.connect("clicked", self.save_form)
         self.cancel_button.connect("clicked", self.cancel_form)
 
         self.add(self.hbox)
+
+    def Calculate(self, widget):
+        year = int(self.date.get_text()[0:4])
+        month = int(self.date.get_text()[5:7])
+        day = int(self.date.get_text()[8:])
+        freq = int(self.reminder.get_text())
+        entered_date = datetime.date(year, month, day)
+        diff = datetime.timedelta(days=freq)
+        new_date = entered_date + diff
+        self.next_date.set_text(str(new_date))
+
 
     def save_form(self, widget):
         if len(self.section.get_text()) == 0 or \
@@ -634,6 +651,7 @@ class Assign_Job(Gtk.Window):
         self.vbox_right.pack_start(self.code, True, True, 3)
         self.date_label = Gtk.Label("PM Date")
         self.date = Gtk.Entry()
+        self.date.set_text("yyyy/mm/dd")
         self.vbox_right.pack_start(self.date_label, True, True, 3)
         self.vbox_right.pack_start(self.date, True, True, 3)
         self.next_date_label = Gtk.Label("Next PM Date")
@@ -645,14 +663,27 @@ class Assign_Job(Gtk.Window):
         self.assign = Gtk.Entry()
         self.vbox_right.pack_start(self.assign, True, True, 3)
 
+        self.calculate = Gtk.Button("Calculate")
         self.save_button = Gtk.Button("Save")
         self.cancel_button = Gtk.Button("Cancel")
         self.vbox_left.pack_start(self.save_button, True, True, 3)
+        self.vbox_right.pack_start(self.calculate, True, True, 3)
         self.vbox_right.pack_start(self.cancel_button, True, True, 3)
+        self.calculate.connect("clicked", self.Calculate)
         self.save_button.connect("clicked", self.save_form)
         self.cancel_button.connect("clicked", self.cancel_form)
 
         self.add(self.hbox)
+
+    def Calculate(self, widget):
+        year = int(self.date.get_text()[0:4])
+        month = int(self.date.get_text()[5:7])
+        day = int(self.date.get_text()[8:])
+        freq = int(self.reminder.get_text())
+        entered_date = datetime.date(year, month, day)
+        diff = datetime.timedelta(days=freq)
+        new_date = entered_date + diff
+        self.next_date.set_text(str(new_date))
 
     def save_form(self, widget):
         if len(self.section.get_text()) == 0 or \
