@@ -2,7 +2,7 @@ from mongoengine import *
 
 class User(Document):
     name = StringField(required=True)
-    Personal_number = StringField(required=True, max_length=10, unique=True)
+    Personal_number = StringField(required=True, max_length=6, unique=True)
     password = StringField(required=True)
 
     def __init__(self, name, Personal_number, password, *args, **values):
@@ -26,19 +26,23 @@ class Authentication:
 
     def reg(self, name, Personal_number, password):
         user = User(name, Personal_number, password)
-        result = user.save()
-        if result is None:
-            return False
-        else:
+        try:
+            result = user.save()
             return True
+
+        except Exception as e:
+            return False
+
 
     def login(self, Personal_number, password):
 
-        user = User.objects.get(Personal_number=Personal_number)
+        try:
+            user = User.objects.get(Personal_number=Personal_number)
+            if user.password != password:
+                return False
+            else:
+                return True
 
-        if user is None:
+        except Exception as e:
             return False
-        elif user.password != password:
-            return False
-        else:
-            return True
+

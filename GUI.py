@@ -61,7 +61,7 @@ class Main_Window(Gtk.Window):
 
             if check == True:
                 self.destroy()
-                equipment_details = Equipment_form()
+                equipment_details = User_profile()
                 equipment_details.set_position(Gtk.WindowPosition.CENTER)
                 equipment_details.connect("delete-event", Gtk.main_quit)
                 equipment_details.show_all()
@@ -154,17 +154,29 @@ class New_account(Gtk.Window):
             result = newAuth.reg(self.name.get_text(),self.personal_number.get_text(),self.password.get_text())
 
             if result:
-                print ("registrations successful")
+                self.destroy()
+                dialog_created_account = Account_created(self)
+                response = dialog_created_account.run()
+
+                dialog_created_account.destroy()
+                return
             else:
-                print ("registration failed")
+                dialog_exists = Exists(self)
+                response = dialog_exists.run()
 
-            self.destroy()
-            dialog_created_account = Account_created(self)
-            response = dialog_created_account.run()
+                dialog_exists.destroy()
 
-            dialog_created_account.destroy()
-            return
 
+
+class Exists(Gtk.Dialog):
+    def __init__(self, parent):
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("User already exists."))
+        self.show_all()
 
 class Account_created(Gtk.Dialog):
 
@@ -274,6 +286,212 @@ class Equipment_form(Gtk.Window):
         return
 
 
+class User_profile(Gtk.Window):
+
+    def __init__(self):
+
+        Gtk.Window.__init__(self, title = "Your Profile")
+        self.set_border_width(25)
+        self.set_default_size(400, 50)
+
+        self.hbox = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL, spacing = 5)
+
+        self.equipment_form = Gtk.Button("Equipment Details")
+        self.schedule_service = Gtk.Button("Schedule Service")
+        self.assign_job = Gtk.Button("Assign Job")
+        self.hbox.pack_start(self.equipment_form, True, True, 10)
+        self.hbox.pack_start(self.schedule_service, True, True, 10)
+        self.hbox.pack_start(self.assign_job, True, True, 10)
+
+        self.equipment_form.connect("clicked", self.call_equipment_form)
+        self.schedule_service.connect("clicked", self.call_schedule_service)
+        self.assign_job.connect("clicked", self.call_assign_job)
+
+        self.add(self.hbox)
+
+
+    def call_equipment_form(self, widget):
+        new_window = Equipment_form()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+
+    def call_schedule_service(self, widget):
+        new_window = Schedule_service()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+
+    def call_assign_job(self, widget):
+        new_window = Assign_Job()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+
+
+
+class Schedule_service(Gtk.Window):
+
+    def __init__(self):
+
+        Gtk.Window.__init__(self, title = "Schedule Service")
+        self.set_border_width(10)
+        self.set_default_size(850, 300)
+
+        self.hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+        self.vbox_left = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+        self.vbox_right = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+
+        self.hbox.pack_start(self.vbox_left, True, True, 0)
+        self.hbox.pack_start(self.vbox_right, True, True, 0)
+
+        self.section_label = Gtk.Label("Section")
+        self.section = Gtk.Entry()
+        self.vbox_left.pack_start(self.section_label, True, True, 3)
+        self.vbox_left.pack_start(self.section, True, True, 3)
+        self.sub_loc_label = Gtk.Label("Sub Location")
+        self.sub_loc = Gtk.Entry()
+        self.vbox_left.pack_start(self.sub_loc_label, True, True, 3)
+        self.vbox_left.pack_start(self.sub_loc, True, True, 3)
+        self.task_label = Gtk.Label("Task")
+        self.task = Gtk.Entry()
+        self.vbox_left.pack_start(self.task_label, True,True, 3)
+        self.vbox_left.pack_start(self.task, True,True, 3)
+        self.inform_to_label = Gtk.Label("Inform to (If any)")
+        self.inform_to =Gtk.Entry()
+        self.vbox_left.pack_start(self.inform_to_label, True, True, 3)
+        self.vbox_left.pack_start(self.inform_to, True, True, 3)
+        self.prev_main_label = Gtk.Label("Preventive Maintenance")
+        self.prev_main = Gtk.Entry()
+        self.vbox_left.pack_start(self.prev_main_label, True, True, 3)
+        self.vbox_left.pack_start(self.prev_main, True, True, 3)
+        self.freque_label  = Gtk.Label("PM Frequency(in month)")
+        self.freque = Gtk.Entry()
+        self.vbox_left.pack_start(self.freque_label, True, True, 3)
+        self.vbox_left.pack_start(self.freque, True, True, 3)
+        self.reminder_label = Gtk.Label("Reminder before PM date(in days)")
+        self.reminder = Gtk.Entry()
+        self.vbox_left.pack_start(self.reminder_label, True, True, 3)
+        self.vbox_left.pack_start(self.reminder, True, True, 3)
+
+
+        self.loc_label = Gtk.Label("Location")
+        self.loc = Gtk.Entry()
+        self.vbox_right.pack_start(self.loc_label, True, True, 3)
+        self.vbox_right.pack_start(self.loc, True, True, 3)
+        self.equip_label = Gtk.Label("Equipment")
+        self.equip = Gtk.Entry()
+        self.vbox_right.pack_start(self.equip_label, True, True, 3)
+        self.vbox_right.pack_start(self.equip, True, True, 3)
+        self.owner_label = Gtk.Label("PM Owner")
+        self.owner = Gtk.Entry()
+        self.vbox_right.pack_start(self.owner_label, True, True, 3)
+        self.vbox_right.pack_start(self.owner, True, True, 3)
+        self.code_label = Gtk.Label("PM Code")
+        self.code = Gtk.Entry()
+        self.vbox_right.pack_start(self.code_label, True, True, 3)
+        self.vbox_right.pack_start(self.code, True, True, 3)
+        self.date_label = Gtk.Label("PM Date")
+        self.date = Gtk.Entry()
+        self.vbox_right.pack_start(self.date_label, True, True, 3)
+        self.vbox_right.pack_start(self.date, True, True, 3)
+        self.next_date_label = Gtk.Label("Next PM Date")
+        self.vbox_right.pack_start(self.next_date_label, True, True, 3)
+        self.next_date = Gtk.Entry()
+        self.vbox_right.pack_start(self.next_date, True, True, 3)
+
+        self.save_button = Gtk.Button("Save")
+        self.cancel_button = Gtk.Button("Cancel")
+        self.vbox_right.pack_start(self.save_button, True, True, 3)
+        self.vbox_right.pack_start(self.cancel_button, True, True, 3)
+
+
+        self.add(self.hbox)
+
+
+class Assign_Job(Gtk.Window):
+
+    def __init__(self):
+        Gtk.Window.__init__(self, title="Assign Job")
+        self.set_border_width(10)
+        self.set_default_size(850, 300)
+
+        self.hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+        self.vbox_left = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+        self.vbox_right = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+
+        self.hbox.pack_start(self.vbox_left, True, True, 0)
+        self.hbox.pack_start(self.vbox_right, True, True, 0)
+
+        self.section_label = Gtk.Label("Section")
+        self.section = Gtk.Entry()
+        self.vbox_left.pack_start(self.section_label, True, True, 3)
+        self.vbox_left.pack_start(self.section, True, True, 3)
+        self.sub_loc_label = Gtk.Label("Sub Location")
+        self.sub_loc = Gtk.Entry()
+        self.vbox_left.pack_start(self.sub_loc_label, True, True, 3)
+        self.vbox_left.pack_start(self.sub_loc, True, True, 3)
+        self.task_label = Gtk.Label("Task")
+        self.task = Gtk.Entry()
+        self.vbox_left.pack_start(self.task_label, True, True, 3)
+        self.vbox_left.pack_start(self.task, True, True, 3)
+        self.inform_to_label = Gtk.Label("Inform to (If any)")
+        self.inform_to = Gtk.Entry()
+        self.vbox_left.pack_start(self.inform_to_label, True, True, 3)
+        self.vbox_left.pack_start(self.inform_to, True, True, 3)
+        self.prev_main_label = Gtk.Label("Preventive Maintenance")
+        self.prev_main = Gtk.Entry()
+        self.vbox_left.pack_start(self.prev_main_label, True, True, 3)
+        self.vbox_left.pack_start(self.prev_main, True, True, 3)
+        self.freque_label = Gtk.Label("PM Frequency(in month)")
+        self.freque = Gtk.Entry()
+        self.vbox_left.pack_start(self.freque_label, True, True, 3)
+        self.vbox_left.pack_start(self.freque, True, True, 3)
+        self.reminder_label = Gtk.Label("Reminder before PM date(in days)")
+        self.reminder = Gtk.Entry()
+        self.vbox_left.pack_start(self.reminder_label, True, True, 3)
+        self.vbox_left.pack_start(self.reminder, True, True, 3)
+
+        self.loc_label = Gtk.Label("Location")
+        self.loc = Gtk.Entry()
+        self.vbox_right.pack_start(self.loc_label, True, True, 3)
+        self.vbox_right.pack_start(self.loc, True, True, 3)
+        self.equip_label = Gtk.Label("Equipment")
+        self.equip = Gtk.Entry()
+        self.vbox_right.pack_start(self.equip_label, True, True, 3)
+        self.vbox_right.pack_start(self.equip, True, True, 3)
+        self.owner_label = Gtk.Label("PM Owner")
+        self.owner = Gtk.Entry()
+        self.vbox_right.pack_start(self.owner_label, True, True, 3)
+        self.vbox_right.pack_start(self.owner, True, True, 3)
+        self.code_label = Gtk.Label("PM Code")
+        self.code = Gtk.Entry()
+        self.vbox_right.pack_start(self.code_label, True, True, 3)
+        self.vbox_right.pack_start(self.code, True, True, 3)
+        self.date_label = Gtk.Label("PM Date")
+        self.date = Gtk.Entry()
+        self.vbox_right.pack_start(self.date_label, True, True, 3)
+        self.vbox_right.pack_start(self.date, True, True, 3)
+        self.next_date_label = Gtk.Label("Next PM Date")
+        self.vbox_right.pack_start(self.next_date_label, True, True, 3)
+        self.next_date = Gtk.Entry()
+        self.vbox_right.pack_start(self.next_date, True, True, 3)
+        self.assign_label = Gtk.Label("Assign Job to")
+        self.vbox_right.pack_start(self.assign_label, True, True, 3)
+        self.assign = Gtk.Entry()
+        self.vbox_right.pack_start(self.assign, True, True, 3)
+
+
+
+        self.save_button = Gtk.Button("Save")
+        self.cancel_button = Gtk.Button("Cancel")
+        self.vbox_left.pack_start(self.save_button, True, True, 3)
+        self.vbox_right.pack_start(self.cancel_button, True, True, 3)
+
+        self.add(self.hbox)
 
 
 
