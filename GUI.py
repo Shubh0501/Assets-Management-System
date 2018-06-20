@@ -202,10 +202,6 @@ class Number(Gtk.Dialog):
         self.show_all()
 
 
-
-
-
-
 class Exists(Gtk.Dialog):
     def __init__(self, parent):
         Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
@@ -240,6 +236,52 @@ class Error(Gtk.Dialog):
         area = self.get_content_area()
         area.add(Gtk.Label("Please enter all the details"))
         self.show_all()
+
+
+class User_profile(Gtk.Window):
+
+    def __init__(self):
+
+        Gtk.Window.__init__(self, title = "Your Profile")
+        self.set_border_width(25)
+        self.set_default_size(400, 50)
+
+        self.hbox = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL, spacing = 5)
+
+        self.equipment_form = Gtk.Button("Equipment Details")
+        self.schedule_service = Gtk.Button("Schedule Service")
+        self.assign_job = Gtk.Button("Assign Job")
+        self.hbox.pack_start(self.equipment_form, True, True, 10)
+        self.hbox.pack_start(self.schedule_service, True, True, 10)
+        self.hbox.pack_start(self.assign_job, True, True, 10)
+
+        self.equipment_form.connect("clicked", self.call_equipment_form)
+        self.schedule_service.connect("clicked", self.call_schedule_service)
+        self.assign_job.connect("clicked", self.call_assign_job)
+
+        self.add(self.hbox)
+
+
+    def call_equipment_form(self, widget):
+        new_window = Equipment_form()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+
+    def call_schedule_service(self, widget):
+        new_window = Schedule_service()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+
+    def call_assign_job(self, widget):
+        new_window = Assign_Job()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
 
 
 class Equipment_form(Gtk.Window):
@@ -320,13 +362,22 @@ class Equipment_form(Gtk.Window):
         self.vbox_right.pack_start(self.cancel, True, True, 3)
 
         self.save.connect("clicked", self.save_equip_form)
+        self.cancel.connect("clicked", self.cancel_form)
 
         self.add(self.hbox)
 
         return
 
     def save_equip_form(self, widget):
-        if len(self.department.get_text()) == 0 or len(self.location.get_text()) == 0 or len(self.trade.get_text()) == 0 or len(self.equipment_code.get_text()) == 0 or len(self.equipment_sl_no.get_text()) == 0 or len(self.parent_equipment.get_text()) == 0 or len(self.section.get_text()) == 0 or len(self.sub_location.get_text()) == 0 or len(self.category.get_text()) == 0 or len(self.equipment.get_text()) == 0:
+        if len(self.department.get_text()) == 0 or \
+                len(self.trade.get_text()) == 0 or \
+                len(self.equipment_code.get_text()) == 0 or \
+                len(self.equipment_sl_no.get_text()) == 0 or \
+                len(self.parent_equipment.get_text()) == 0 or \
+                len(self.section.get_text()) == 0 or \
+                len(self.sub_location.get_text()) == 0 or \
+                len(self.category.get_text()) == 0 or \
+                len(self.equipment.get_text()) == 0:
             dialog_error = Error(self)
             response = dialog_error.run()
 
@@ -348,16 +399,24 @@ class Equipment_form(Gtk.Window):
                 self.state.get_state())
             if result:
                 self.destroy()
-                dialog_equip_form_saved = Equip_form_saved(self)
+                dialog_equip_form_saved = form_saved(self)
                 response = dialog_equip_form_saved.run()
 
                 dialog_equip_form_saved.destroy()
                 return
             else:
-                print("Error")
+                dialog_equip_form_save_error = form_save_error(self)
+                response = dialog_equip_form_save_error.run()
+
+                dialog_equip_form_save_error.destroy()
+                return
+
+    def cancel_form(self, widget):
+        self.destroy()
+        return
 
 
-class Equip_form_saved(Gtk.Dialog):
+class form_saved(Gtk.Dialog):
 
     def __init__(self, parent):
 
@@ -366,56 +425,20 @@ class Equip_form_saved(Gtk.Dialog):
         self.set_border_width(20)
         self.set_position(Gtk.WindowPosition.CENTER)
         area = self.get_content_area()
-        area.add(Gtk.Label("Equipment details form saved successfully."))
+        area.add(Gtk.Label("Form saved successfully."))
         self.show_all()
 
+class form_save_error(Gtk.Dialog):
 
+    def __init__(self, parent):
 
-class User_profile(Gtk.Window):
-
-    def __init__(self):
-
-        Gtk.Window.__init__(self, title = "Your Profile")
-        self.set_border_width(25)
-        self.set_default_size(400, 50)
-
-        self.hbox = Gtk.Box(orientation = Gtk.Orientation.HORIZONTAL, spacing = 5)
-
-        self.equipment_form = Gtk.Button("Equipment Details")
-        self.schedule_service = Gtk.Button("Schedule Service")
-        self.assign_job = Gtk.Button("Assign Job")
-        self.hbox.pack_start(self.equipment_form, True, True, 10)
-        self.hbox.pack_start(self.schedule_service, True, True, 10)
-        self.hbox.pack_start(self.assign_job, True, True, 10)
-
-        self.equipment_form.connect("clicked", self.call_equipment_form)
-        self.schedule_service.connect("clicked", self.call_schedule_service)
-        self.assign_job.connect("clicked", self.call_assign_job)
-
-        self.add(self.hbox)
-
-
-    def call_equipment_form(self, widget):
-        new_window = Equipment_form()
-        new_window.set_position(Gtk.WindowPosition.CENTER)
-        new_window.connect("delete-event", Gtk.main_quit)
-        new_window.show_all()
-        Gtk.main()
-
-    def call_schedule_service(self, widget):
-        new_window = Schedule_service()
-        new_window.set_position(Gtk.WindowPosition.CENTER)
-        new_window.connect("delete-event", Gtk.main_quit)
-        new_window.show_all()
-        Gtk.main()
-
-    def call_assign_job(self, widget):
-        new_window = Assign_Job()
-        new_window.set_position(Gtk.WindowPosition.CENTER)
-        new_window.connect("delete-event", Gtk.main_quit)
-        new_window.show_all()
-        Gtk.main()
-
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("There is a problem in saving the form. Please try again."))
+        self.show_all()
 
 
 class Schedule_service(Gtk.Window):
@@ -492,9 +515,63 @@ class Schedule_service(Gtk.Window):
         self.cancel_button = Gtk.Button("Cancel")
         self.vbox_right.pack_start(self.save_button, True, True, 3)
         self.vbox_right.pack_start(self.cancel_button, True, True, 3)
-
+        self.save_button.connect("clicked", self.save_form)
+        self.cancel_button.connect("clicked", self.cancel_form)
 
         self.add(self.hbox)
+
+    def save_form(self, widget):
+        if len(self.section.get_text()) == 0 or \
+            len(self.sub_loc.get_text()) == 0 or\
+            len(self.task.get_text()) == 0 or\
+            len(self.inform_to.get_text()) == 0 or\
+            len(self.prev_main.get_text()) == 0 or\
+            len(self.freque.get_text()) == 0 or\
+            len(self.reminder.get_text()) == 0 or\
+            len(self.loc.get_text()) == 0 or\
+            len(self.equip.get_text()) == 0 or\
+            len(self.owner.get_text()) == 0 or\
+            len(self.code.get_text()) == 0 or\
+            len(self.date.get_text()) == 0 or\
+            len(self.next_date.get_text()) == 0:
+            dialog_error = Error(self)
+            response = dialog_error.run()
+
+            dialog_error.destroy()
+            return
+        else:
+            result = newAuth.schedule_form(
+                self.section.get_text(),
+                self.sub_loc.get_text(),
+                self.task.get_text(),
+                self.inform_to.get_text(),
+                self.prev_main.get_text(),
+                self.freque.get_text(),
+                self.reminder.get_text(),
+                self.loc.get_text(),
+                self.equip.get_text(),
+                self.owner.get_state(),
+                self.code.get_text(),
+                self.date.get_text(),
+                self.next_date.get_text())
+            if result:
+                self.destroy()
+                dialog_equip_form_saved = form_saved(self)
+                response = dialog_equip_form_saved.run()
+
+                dialog_equip_form_saved.destroy()
+                return
+            else:
+                dialog_schedule_form_save_error = form_save_error(self)
+                response = dialog_schedule_form_save_error.run()
+
+                dialog_schedule_form_save_error.destroy()
+                return
+
+    def cancel_form(self, widget):
+        self.destroy()
+        return
+
 
 
 class Assign_Job(Gtk.Window):
@@ -569,14 +646,18 @@ class Assign_Job(Gtk.Window):
         self.assign = Gtk.Entry()
         self.vbox_right.pack_start(self.assign, True, True, 3)
 
-
-
         self.save_button = Gtk.Button("Save")
         self.cancel_button = Gtk.Button("Cancel")
         self.vbox_left.pack_start(self.save_button, True, True, 3)
         self.vbox_right.pack_start(self.cancel_button, True, True, 3)
 
+        self.cancel_button.connect("clicked", self.cancel_form)
+
         self.add(self.hbox)
+
+    def cancel_form(self, widget):
+        self.destroy()
+        return
 
 
 
