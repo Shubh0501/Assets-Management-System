@@ -42,7 +42,7 @@ class Schedule(Document):
     section = StringField(required=True)
     sub_loc = StringField(required=True)
     task = StringField(required=True)
-    inform_to = StringField(required=True)
+    inform_to = StringField()
     prev_main = StringField(required=True)
     freq = StringField(required=True)
     reminder = StringField(required=True)
@@ -68,6 +68,39 @@ class Schedule(Document):
         self.code = code
         self.date = date
         self.next_date = next_date
+
+class Assign(Document):
+    section = StringField(required=True)
+    sub_loc = StringField(required=True)
+    task = StringField(required=True)
+    inform_to = StringField()
+    prev_main = StringField(required=True)
+    freq = StringField(required=True)
+    reminder = StringField(required=True)
+    loc = StringField(required=True)
+    equip_name = StringField(required=True)
+    owner = StringField(required=True)
+    code = StringField(required=True)
+    date = StringField(required=True)
+    next_date = StringField(required=True)
+    assign = StringField(required=True)
+
+    def __init__(self, section, sub_loc, task, inform_to, prev_main, freq, reminder, loc, equip_name, owner, code, date, next_date, assign, *args, **values):
+        super(Assign, self).__init__(*args, **values)
+        self.section = section
+        self.sub_loc = sub_loc
+        self.task = task
+        self.inform_to = inform_to
+        self.prev_main = prev_main
+        self.freq = freq
+        self.reminder = reminder
+        self.loc = loc
+        self.equip_name = equip_name
+        self.owner = owner
+        self.code = code
+        self.date = date
+        self.next_date = next_date
+        self.assign = assign
 
 class Authentication:
 
@@ -116,6 +149,15 @@ class Authentication:
         schedule = Schedule(section, sub_loc, task, inform_to, prev_main, freq, reminder, loc, equip_name, owner, code, date, next_date)
         try:
             schedule.save()
+            return True
+
+        except Exception as e:
+            return False
+
+    def assign_form(self, section, sub_loc, task, inform_to, prev_main, freq, reminder, loc, equip_name, owner, code, date, next_date, assign):
+        assign = Assign(section, sub_loc, task, inform_to, prev_main, freq, reminder, loc, equip_name, owner, code, date, next_date, assign)
+        try:
+            assign.save()
             return True
 
         except Exception as e:

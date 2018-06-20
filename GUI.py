@@ -524,7 +524,6 @@ class Schedule_service(Gtk.Window):
         if len(self.section.get_text()) == 0 or \
             len(self.sub_loc.get_text()) == 0 or\
             len(self.task.get_text()) == 0 or\
-            len(self.inform_to.get_text()) == 0 or\
             len(self.prev_main.get_text()) == 0 or\
             len(self.freque.get_text()) == 0 or\
             len(self.reminder.get_text()) == 0 or\
@@ -550,7 +549,7 @@ class Schedule_service(Gtk.Window):
                 self.reminder.get_text(),
                 self.loc.get_text(),
                 self.equip.get_text(),
-                self.owner.get_state(),
+                self.owner.get_text(),
                 self.code.get_text(),
                 self.date.get_text(),
                 self.next_date.get_text())
@@ -650,10 +649,59 @@ class Assign_Job(Gtk.Window):
         self.cancel_button = Gtk.Button("Cancel")
         self.vbox_left.pack_start(self.save_button, True, True, 3)
         self.vbox_right.pack_start(self.cancel_button, True, True, 3)
-
+        self.save_button.connect("clicked", self.save_form)
         self.cancel_button.connect("clicked", self.cancel_form)
 
         self.add(self.hbox)
+
+    def save_form(self, widget):
+        if len(self.section.get_text()) == 0 or \
+            len(self.sub_loc.get_text()) == 0 or\
+            len(self.task.get_text()) == 0 or\
+            len(self.prev_main.get_text()) == 0 or\
+            len(self.freque.get_text()) == 0 or\
+            len(self.reminder.get_text()) == 0 or\
+            len(self.loc.get_text()) == 0 or\
+            len(self.equip.get_text()) == 0 or\
+            len(self.owner.get_text()) == 0 or\
+            len(self.code.get_text()) == 0 or\
+            len(self.date.get_text()) == 0 or\
+            len(self.next_date.get_text()) == 0 or\
+            len(self.assign.get_text()) == 0:
+            dialog_error = Error(self)
+            response = dialog_error.run()
+
+            dialog_error.destroy()
+            return
+        else:
+            result = newAuth.assign_form(
+                self.section.get_text(),
+                self.sub_loc.get_text(),
+                self.task.get_text(),
+                self.inform_to.get_text(),
+                self.prev_main.get_text(),
+                self.freque.get_text(),
+                self.reminder.get_text(),
+                self.loc.get_text(),
+                self.equip.get_text(),
+                self.owner.get_text(),
+                self.code.get_text(),
+                self.date.get_text(),
+                self.next_date.get_text(),
+                self.assign.get_text())
+            if result:
+                self.destroy()
+                dialog_equip_form_saved = form_saved(self)
+                response = dialog_equip_form_saved.run()
+
+                dialog_equip_form_saved.destroy()
+                return
+            else:
+                dialog_schedule_form_save_error = form_save_error(self)
+                response = dialog_schedule_form_save_error.run()
+
+                dialog_schedule_form_save_error.destroy()
+                return
 
     def cancel_form(self, widget):
         self.destroy()
