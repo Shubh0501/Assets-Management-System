@@ -56,6 +56,20 @@ class Main_Window(Gtk.Window):
 
             dialog_details.destroy()
             return
+
+        try:
+
+            pqr = int(self.username.get_text())
+            if (pqr < 100000 or pqr > 999999):
+                pqr = (int)("abc")
+        except Exception as e:
+            dialog_number = Number(self)
+            response = dialog_number.run()
+            dialog_number.destroy()
+            return
+
+
+
         else:
             check = newAuth.login(self.username.get_text(), self.password.get_text())
 
@@ -149,6 +163,16 @@ class New_account(Gtk.Window):
 
             dialog_error.destroy()
             return
+        try:
+
+            pqr = int(self.personal_number.get_text())
+            if (pqr < 100000 or pqr > 999999):
+                pqr = (int)("abc")
+        except Exception as e:
+            dialog_number = Number(self)
+            response = dialog_number.run()
+            dialog_number.destroy()
+            return
         else:
 
             result = newAuth.reg(self.name.get_text(),self.personal_number.get_text(),self.password.get_text())
@@ -165,6 +189,22 @@ class New_account(Gtk.Window):
                 response = dialog_exists.run()
 
                 dialog_exists.destroy()
+
+
+class Number(Gtk.Dialog):
+
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("Invalid Personal Number or Password "))
+        self.show_all()
+
+
+
 
 
 
@@ -281,9 +321,45 @@ class Equipment_form(Gtk.Window):
         self.vbox_right.pack_start(self.save, True, True, 3)
         self.vbox_right.pack_start(self.cancel, True, True, 3)
 
+        self.save.connect("clicked", self.save_equip_form)
+
         self.add(self.hbox)
 
         return
+
+    def save_equip_form(self, widget):
+        if len(self.department.get_text()) == 0 or len(self.location.get_text()) == 0 or len(self.trade.get_text()) == 0 or len(self.equipment_code.get_text()) == 0 or len(self.equipment_sl_no.get_text()) == 0 or len(self.parent_equipment.get_text()) == 0 or len(self.section.get_text()) == 0 or len(self.sub_location.get_text()) == 0 or len(self.category.get_text()) == 0 or len(self.equipment.get_text()) == 0:
+            dialog_error = Error(self)
+            response = dialog_error.run()
+
+            dialog_error.destroy()
+            return
+
+        else:
+            result = newAuth.equipment_form(self.department, self.location, self.trade, self.equipment_code, self.equipment_sl_no, self.section, self.sub_location, self.category, self.equipment, self.state)
+            if result:
+                self.destroy()
+                dialog_equip_form_saved = Equip_form_saved(self)
+                response = dialog_equip_form_saved.run()
+
+                dialog_equip_form_saved.destroy()
+                return
+            else:
+                print("Error")
+
+
+class Equip_form_saved(Gtk.Dialog):
+
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Equipment form saved.", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("Equipment details form saved successfully."))
+        self.show_all()
+
 
 
 class User_profile(Gtk.Window):

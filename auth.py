@@ -11,8 +11,35 @@ class User(Document):
         self.Personal_number = Personal_number
         self.password = password
 
-    def __str__(self):
-        return self.name + "--"  + "--" + self.Personal_number
+
+
+class Equipment(Document):
+    department = StringField(required=True)
+    location = StringField(required=True)
+    trade = StringField(required=True)
+    equip_code = StringField(required=True)
+    equip_sl_no = StringField(required=True)
+    section = StringField(required=True)
+    sub_loc = StringField(required=True)
+    category = StringField(required=True)
+    equipment_name = StringField(required=True)
+    state = BooleanField(required=True)
+
+    def __init__(self, department, location, trade, equip_code, equip_sl_no, section, sub_loc, category, equipment_name, state, *args, **values):
+        super(Equipment, self).__init__(*args, **values)
+        self.department = department
+        self.location = location
+        self.trade = trade
+        self.equip_code = equip_code
+        self.equip_sl_no = equip_sl_no
+        self.section = section
+        self.sub_loc = sub_loc
+        self.category = category
+        self.equipment_name = equipment_name
+        self.state = state
+
+
+
 
 
 class Authentication:
@@ -46,3 +73,14 @@ class Authentication:
         except Exception as e:
             return False
 
+
+
+    def equipment_form(self, department, location, trade, equip_code, equip_sl_no, section, sub_loc, category, equipment_name, state):
+
+        equipment = Equipment(department, location, trade, equip_code, equip_sl_no, section, sub_loc, category, equipment_name, state)
+        try:
+            result = equipment.save()
+            return True
+
+        except Exception as e:
+            return False
