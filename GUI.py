@@ -1,8 +1,6 @@
-import datetime
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
-from pymongo import MongoClient
 import auth
 
 newAuth = auth.Authentication("localhost", 27017, 'user_database', None, None)
