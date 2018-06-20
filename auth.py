@@ -38,10 +38,6 @@ class Equipment(Document):
         self.equipment_name = equipment_name
         self.state = state
 
-
-
-
-
 class Authentication:
 
     def __init__(self, host, port, dbname, username, password):
@@ -54,7 +50,7 @@ class Authentication:
     def reg(self, name, Personal_number, password):
         user = User(name, Personal_number, password)
         try:
-            result = user.save()
+            user.save()
             return True
 
         except Exception as e:
@@ -79,8 +75,9 @@ class Authentication:
 
         equipment = Equipment(department, location, trade, equip_code, equip_sl_no, section, sub_loc, category, equipment_name, state)
         try:
-            result = equipment.save()
+            equipment.save()
             return True
 
         except Exception as e:
+            print(e)
             return False

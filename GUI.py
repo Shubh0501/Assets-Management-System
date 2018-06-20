@@ -1,8 +1,6 @@
-import datetime
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
-from pymongo import MongoClient
 import auth
 
 newAuth = auth.Authentication("localhost", 27017, 'user_database', None, None)
@@ -336,7 +334,18 @@ class Equipment_form(Gtk.Window):
             return
 
         else:
-            result = newAuth.equipment_form(self.department, self.location, self.trade, self.equipment_code, self.equipment_sl_no, self.section, self.sub_location, self.category, self.equipment, self.state)
+             
+            result = newAuth.equipment_form(
+                self.department.get_text(),
+                self.location.get_text(), 
+                self.trade.get_text(),
+                self.equipment_code.get_text(), 
+                self.equipment_sl_no.get_text(), 
+                self.section.get_text(), 
+                self.sub_location.get_text(), 
+                self.category.get_text(), 
+                self.equipment.get_text(), 
+                self.state.get_state())
             if result:
                 self.destroy()
                 dialog_equip_form_saved = Equip_form_saved(self)
