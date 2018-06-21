@@ -6,8 +6,6 @@ import datetime
 
 
 newAuth = auth.Authentication("localhost", 27017, 'user_database', None, None)
-global equip_sl_no
-global owner
 equip_sl_no = None
 owner = None
 
@@ -290,12 +288,13 @@ class User_profile(Gtk.Window):
         return
 
     def call_schedule_service(self, widget):
+        global equip_sl_no
         if equip_sl_no == None:
             dialog_empty_form = equipment_form_empty(self)
             response = dialog_empty_form.run()
             dialog_empty_form.destroy()
-
             return
+
         new_window = Schedule_service()
         new_window.set_position(Gtk.WindowPosition.CENTER)
         new_window.connect("delete-event", Gtk.main_quit)
@@ -304,6 +303,7 @@ class User_profile(Gtk.Window):
         return
 
     def call_assign_job(self, widget):
+        global owner
         if owner == None:
             dialog_empty_form = schedule_form_empty(self)
             response = dialog_empty_form.run()
@@ -459,6 +459,7 @@ class Equipment_form(Gtk.Window):
                 self.state.get_state())
             if result:
 
+                global equip_sl_no
                 equip_sl_no = self.equipment_sl_no.get_text()
                 self.destroy()
                 dialog_equip_form_saved = form_saved(self)
@@ -520,6 +521,7 @@ class Schedule_service(Gtk.Window):
         self.hbox.pack_start(self.vbox_left, True, True, 0)
         self.hbox.pack_start(self.vbox_right, True, True, 0)
 
+        global equip_sl_no
         details = auth.Equipment.objects.get(equip_sl_no = equip_sl_no)
         section = details.section
         sub_loc = details.sub_loc
@@ -647,7 +649,7 @@ class Schedule_service(Gtk.Window):
                 self.date.get_text(),
                 self.next_date.get_text())
             if result:
-
+                global owner
                 owner = self.owner.get_text()
                 self.destroy()
                 dialog_equip_form_saved = form_saved(self)
@@ -680,6 +682,7 @@ class Assign_Job(Gtk.Window):
         self.hbox.pack_start(self.vbox_left, True, True, 0)
         self.hbox.pack_start(self.vbox_right, True, True, 0)
 
+        global owner
         details = auth.Schedule.objects.get(owner= owner)
 
         section = details.section
