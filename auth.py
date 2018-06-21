@@ -3,12 +3,14 @@ from mongoengine import *
 class User(Document):
     name = StringField(required=True)
     Personal_number = StringField(required=True, max_length=6, unique=True)
+    mail = StringField(required=True, unique=True)
     password = StringField(required=True)
 
-    def __init__(self, name, Personal_number, password, *args, **values):
+    def __init__(self, name, Personal_number,mail, password, *args, **values):
         super(User, self).__init__(*args, **values)
         self.name = name
         self.Personal_number = Personal_number
+        self.mail = mail
         self.password = password
 
 
@@ -111,8 +113,8 @@ class Authentication:
         else:
             connect(db=dbname, host=host, port=port, username=username, password=password)
 
-    def reg(self, name, Personal_number, password):
-        user = User(name, Personal_number, password)
+    def reg(self, name, Personal_number, mail, password):
+        user = User(name, Personal_number, mail, password)
         try:
             user.save()
             return True

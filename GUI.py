@@ -4,6 +4,7 @@ from gi.repository import Gtk
 import auth
 import datetime
 
+
 newAuth = auth.Authentication("localhost", 27017, 'user_database', None, None)
 
 class Main_Window(Gtk.Window):
@@ -109,6 +110,7 @@ class Details(Gtk.Dialog):
         area = self.get_content_area()
         area.add(Gtk.Label("Username or Password Incorrect"))
         self.show_all()
+        return
 
 
 class New_account(Gtk.Window):
@@ -140,6 +142,12 @@ class New_account(Gtk.Window):
         self.vbox_centre.pack_start(self.name_label, True, True, 0)
         self.vbox_centre.pack_start(self.name, True, True, 0)
 
+        self.mail_label = Gtk.Label("Mail : ")
+        self.mail = Gtk.Entry()
+        self.mail.set_placeholder_text("compulsory")
+        self.vbox_centre.pack_start(self.mail_label, True, True, 0)
+        self.vbox_centre.pack_start(self.mail, True, True, 0)
+
         self.password_label = Gtk.Label("Password :")
         self.password = Gtk.Entry()
         self.password.set_visibility(False)
@@ -152,11 +160,12 @@ class New_account(Gtk.Window):
         self.vbox_centre.pack_start(self.create_account_button, True, True, 0)
 
         self.add(self.hbox)
+        return
 
 
 
     def create_account_button_clicked(self, widget):
-        if len(self.personal_number.get_text()) == 0 or len(self.name.get_text()) == 0 or len(self.password.get_text()) == 0:
+        if len(self.personal_number.get_text()) == 0 or len(self.name.get_text()) == 0 or len(self.password.get_text()) == 0 or len(self.mail.get_text()) == 0:
             dialog_error = Error(self)
             response = dialog_error.run()
 
@@ -174,7 +183,7 @@ class New_account(Gtk.Window):
             return
         else:
 
-            result = newAuth.reg(self.name.get_text(),self.personal_number.get_text(),self.password.get_text())
+            result = newAuth.reg(self.name.get_text(),self.personal_number.get_text(),self.mail.get_text(), self.password.get_text())
 
             if result:
                 self.destroy()
@@ -201,6 +210,7 @@ class Number(Gtk.Dialog):
         area = self.get_content_area()
         area.add(Gtk.Label("Invalid Personal Number or Password "))
         self.show_all()
+        return
 
 
 class Exists(Gtk.Dialog):
@@ -212,6 +222,7 @@ class Exists(Gtk.Dialog):
         area = self.get_content_area()
         area.add(Gtk.Label("User already exists."))
         self.show_all()
+        return
 
 class Account_created(Gtk.Dialog):
 
@@ -224,6 +235,7 @@ class Account_created(Gtk.Dialog):
         area = self.get_content_area()
         area.add(Gtk.Label("New Account Created. Please Login to Continue."))
         self.show_all()
+        return
 
 
 class Error(Gtk.Dialog):
@@ -237,6 +249,7 @@ class Error(Gtk.Dialog):
         area = self.get_content_area()
         area.add(Gtk.Label("Please enter all the details"))
         self.show_all()
+        return
 
 
 class User_profile(Gtk.Window):
@@ -261,6 +274,7 @@ class User_profile(Gtk.Window):
         self.assign_job.connect("clicked", self.call_assign_job)
 
         self.add(self.hbox)
+        return
 
 
     def call_equipment_form(self, widget):
@@ -269,6 +283,7 @@ class User_profile(Gtk.Window):
         new_window.connect("delete-event", Gtk.main_quit)
         new_window.show_all()
         Gtk.main()
+        return
 
     def call_schedule_service(self, widget):
         new_window = Schedule_service()
@@ -276,6 +291,7 @@ class User_profile(Gtk.Window):
         new_window.connect("delete-event", Gtk.main_quit)
         new_window.show_all()
         Gtk.main()
+        return
 
     def call_assign_job(self, widget):
         new_window = Assign_Job()
@@ -283,6 +299,7 @@ class User_profile(Gtk.Window):
         new_window.connect("delete-event", Gtk.main_quit)
         new_window.show_all()
         Gtk.main()
+        return
 
 
 class Equipment_form(Gtk.Window):
@@ -399,6 +416,7 @@ class Equipment_form(Gtk.Window):
                 self.equipment.get_text(), 
                 self.state.get_state())
             if result:
+
                 self.destroy()
                 dialog_equip_form_saved = form_saved(self)
                 response = dialog_equip_form_saved.run()
@@ -428,6 +446,7 @@ class form_saved(Gtk.Dialog):
         area = self.get_content_area()
         area.add(Gtk.Label("Form saved successfully."))
         self.show_all()
+        return
 
 class form_save_error(Gtk.Dialog):
 
@@ -440,6 +459,7 @@ class form_save_error(Gtk.Dialog):
         area = self.get_content_area()
         area.add(Gtk.Label("There is a problem in saving the form. Please try again."))
         self.show_all()
+        return
 
 
 class Schedule_service(Gtk.Window):
@@ -477,7 +497,7 @@ class Schedule_service(Gtk.Window):
         self.prev_main = Gtk.Entry()
         self.vbox_left.pack_start(self.prev_main_label, True, True, 3)
         self.vbox_left.pack_start(self.prev_main, True, True, 3)
-        self.freque_label  = Gtk.Label("PM Frequency(in month)")
+        self.freque_label  = Gtk.Label("PM Frequency(in days)")
         self.freque = Gtk.Entry()
         self.vbox_left.pack_start(self.freque_label, True, True, 3)
         self.vbox_left.pack_start(self.freque, True, True, 3)
@@ -525,16 +545,18 @@ class Schedule_service(Gtk.Window):
         self.cancel_button.connect("clicked", self.cancel_form)
 
         self.add(self.hbox)
+        return
 
     def Calculate(self, widget):
         year = int(self.date.get_text()[0:4])
         month = int(self.date.get_text()[5:7])
         day = int(self.date.get_text()[8:])
-        freq = int(self.reminder.get_text())
+        freq = int(self.freque.get_text())
         entered_date = datetime.date(year, month, day)
         diff = datetime.timedelta(days=freq)
         new_date = entered_date + diff
         self.next_date.set_text(str(new_date))
+        return
 
 
     def save_form(self, widget):
@@ -624,7 +646,7 @@ class Assign_Job(Gtk.Window):
         self.prev_main = Gtk.Entry()
         self.vbox_left.pack_start(self.prev_main_label, True, True, 3)
         self.vbox_left.pack_start(self.prev_main, True, True, 3)
-        self.freque_label = Gtk.Label("PM Frequency(in month)")
+        self.freque_label = Gtk.Label("PM Frequency(in days)")
         self.freque = Gtk.Entry()
         self.vbox_left.pack_start(self.freque_label, True, True, 3)
         self.vbox_left.pack_start(self.freque, True, True, 3)
@@ -674,16 +696,18 @@ class Assign_Job(Gtk.Window):
         self.cancel_button.connect("clicked", self.cancel_form)
 
         self.add(self.hbox)
+        return
 
     def Calculate(self, widget):
         year = int(self.date.get_text()[0:4])
         month = int(self.date.get_text()[5:7])
         day = int(self.date.get_text()[8:])
-        freq = int(self.reminder.get_text())
+        freq = int(self.freque.get_text())
         entered_date = datetime.date(year, month, day)
         diff = datetime.timedelta(days=freq)
         new_date = entered_date + diff
         self.next_date.set_text(str(new_date))
+        return
 
     def save_form(self, widget):
         if len(self.section.get_text()) == 0 or \
