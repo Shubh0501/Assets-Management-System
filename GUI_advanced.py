@@ -262,15 +262,15 @@ class User_profile(Gtk.Window):
         Gtk.Window.__init__(self, title = "Your Profile")
         self.set_border_width(25)
         self.set_default_size(1920,1080)
-        self.box = Gtk.Box(orientation = Gtk.Orientation.VERTICAL, spacing = 10)
-        self.hbox1 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
-        self.hbox2 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        self.box = Gtk.Box(orientation = Gtk.Orientation.VERTICAL, spacing = 0)
+        self.hbox1 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+        self.hbox2 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
 
-        self.box.pack_start(self.hbox1, False, False, 10)
-        self.box.pack_start(self.hbox2, False, False, 10)
+        self.box.pack_start(self.hbox1, False, False, 0)
+        self.box.pack_start(self.hbox2, False, False, 0)
 
         image = Gtk.Image()
-        image.set_from_file('images.jpeg')
+        image.set_from_file('jusco_titl.jpg')
         self.hbox1.add(image)
         self.hbox1.set_hexpand(True)
         self.hbox1.set_halign(Gtk.Align.CENTER)
@@ -333,14 +333,27 @@ class User_profile(Gtk.Window):
         self.reports_menu1 = Gtk.MenuItem("Menu Item 1")
         self.reports.append(self.reports_menu1)
         self.menu.append(self.reports_dropdown)
-        self.hbox2.set_hexpand(True)
+        self.logout_dropdown = Gtk.MenuItem("LOGOUT")
+        self.menu.append(self.logout_dropdown)
+        self.logout_dropdown.connect("activate", self.logout_call)
 
+        self.hbox2.set_hexpand(True)
+        self.dashboard_dropdown.set_property("margin_left", 20)
+        self.dashboard_dropdown.set_property("margin_right", 10)
+        self.admin_dropdown.set_property("margin_left", 10)
+        self.admin_dropdown.set_property("margin_right", 10)
+        self.master_dropdown.set_property("margin_left", 10)
+        self.master_dropdown.set_property("margin_right", 10)
+        self.schedule_dropdown.set_property("margin_left", 10)
+        self.schedule_dropdown.set_property("margin_right", 10)
+        self.complain_dropdown.set_property("margin_left", 10)
+        self.complain_dropdown.set_property("margin_right", 10)
+        self.reports_dropdown.set_property("margin_left", 10)
+        self.reports_dropdown.set_property("margin_right", 1100)
+        self.logout_dropdown.set_property("margin_right", 45)
 
         self.hbox2.set_halign(Gtk.Align.START)
-        self.hbox2.pack_start(self.menu, True, True, 5)
-
-        self.logout_button = Gtk.Button("Logout")
-        self.hbox2.pack_end(self.logout_button, True, False, 50)
+        self.hbox2.pack_start(self.menu, True, True, 0)
 
         self.add(self.box)
         return
@@ -382,6 +395,17 @@ class User_profile(Gtk.Window):
         new_window.show_all()
         Gtk.main()
         return
+
+    def logout_call(self, widget):
+        self.destroy()
+        window = Main_Window()
+        window.set_position(Gtk.WindowPosition.CENTER)
+        window.connect("delete-event", Gtk.main_quit)
+        window.show_all()
+        Gtk.main()
+        return
+
+
 
 class equipment_form_empty(Gtk.Dialog):
 
