@@ -15,7 +15,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Assets_Management_System$reminder_sender.coverage" NAME="reminder_sender Coverage Results" MODIFIED="1529570413479" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Assets_Management_System$GUI_advanced.coverage" NAME="GUI_advanced Coverage Results" MODIFIED="1529947836963" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Assets_Management_System$GUI_advanced.coverage" NAME="GUI_advanced Coverage Results" MODIFIED="1529948357704" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Assets_Management_System$datatimeprac.coverage" NAME="datatimeprac Coverage Results" MODIFIED="1529511689306" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Assets_Management_System$database_trial.coverage" NAME="database_trial Coverage Results" MODIFIED="1529568213774" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Assets_Management_System$GUI.coverage" NAME="GUI Coverage Results" MODIFIED="1529650700960" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -62,8 +62,8 @@
       <file leaf-file-name="GUI_advanced.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GUI_advanced.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-426">
-              <caret line="1029" column="32" selection-start-line="1029" selection-start-column="32" selection-end-line="1029" selection-end-column="32" />
+            <state relative-caret-position="210">
+              <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -361,7 +361,14 @@
       <option name="project" value="LOCAL" />
       <updated>1529851522482</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="#ALL_PAGES_UPGRADED">
+      <created>1529947904476</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1529947904476</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -413,7 +420,8 @@
     <MESSAGE value="#GUI_Upgraded" />
     <MESSAGE value="#User_Profile_upgraded" />
     <MESSAGE value="#Equipment_page_upgraded" />
-    <option name="LAST_COMMIT_MESSAGE" value="#Equipment_page_upgraded" />
+    <MESSAGE value="#ALL_PAGES_UPGRADED" />
+    <option name="LAST_COMMIT_MESSAGE" value="#ALL_PAGES_UPGRADED" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/reminder_sender.py">
@@ -709,13 +717,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="151" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/auth.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="690">
@@ -723,10 +724,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="151" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/GUI_advanced.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-426">
-          <caret line="1029" column="32" selection-start-line="1029" selection-start-column="32" selection-end-line="1029" selection-end-column="32" />
+        <state relative-caret-position="210">
+          <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
         </state>
       </provider>
     </entry>

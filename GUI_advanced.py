@@ -12,7 +12,7 @@ search_equip = None
 search_schedule = None
 search_assign = None
 
-
+#MAIN WINDOW LOGIN PAGE
 class Main_Window(Gtk.Window):
 
     def __init__(self):
@@ -114,33 +114,7 @@ class Main_Window(Gtk.Window):
         Gtk.main()
         return
 
-class Details(Gtk.Dialog):
-
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL,(Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("Username or Password Incorrect"))
-        self.show_all()
-        return
-
-class Number(Gtk.Dialog):
-
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("Invalid Personal Number or Password "))
-        self.show_all()
-        return
-
-
+#NEW ACCOUNT CREATE FORM
 class New_account(Gtk.Window):
 
     def __init__(self):
@@ -229,43 +203,7 @@ class New_account(Gtk.Window):
                 dialog_exists.destroy()
                 return
 
-class Error(Gtk.Dialog):
-
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL,(Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("Please enter all the details"))
-        self.show_all()
-        return
-
-class Exists(Gtk.Dialog):
-    def __init__(self, parent):
-        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("User already exists."))
-        self.show_all()
-        return
-
-class Account_created(Gtk.Dialog):
-
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Account Created", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("New Account Created. Please Login to Continue."))
-        self.show_all()
-        return
-
+#USER PROFILE PAGE
 class User_profile(Gtk.Window):
 
     def __init__(self):
@@ -360,8 +298,8 @@ class User_profile(Gtk.Window):
         self.complain_dropdown.set_property("margin_left", 10)
         self.complain_dropdown.set_property("margin_right", 10)
         self.reports_dropdown.set_property("margin_left", 10)
-        self.reports_dropdown.set_property("margin_right", 1100)
-        self.logout_dropdown.set_property("margin_right", 88)
+        self.reports_dropdown.set_property("margin_right", 1158)
+        self.logout_dropdown.set_property("margin_right", 30)
 
         self.hbox2.set_halign(Gtk.Align.START)
         self.hbox2.pack_start(self.menu, True, True, 0)
@@ -405,35 +343,7 @@ class User_profile(Gtk.Window):
         Gtk.main()
         return
 
-
-
-class equipment_form_empty(Gtk.Dialog):
-
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("Please fill the equipment form before filling the Schedule form."))
-        self.show_all()
-        return
-
-class schedule_form_empty(Gtk.Dialog):
-
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("Please fill the Schedule form before filling the Assign form."))
-        self.show_all()
-        return
-
-
+#EQUIPMENTS LIST
 class Equipment_list(Gtk.Window):
 
     def __init__(self):
@@ -534,8 +444,8 @@ class Equipment_list(Gtk.Window):
         self.complain_dropdown.set_property("margin_left", 10)
         self.complain_dropdown.set_property("margin_right", 10)
         self.reports_dropdown.set_property("margin_left", 10)
-        self.reports_dropdown.set_property("margin_right", 1100)
-        self.logout_dropdown.set_property("margin_right", 88)
+        self.reports_dropdown.set_property("margin_right", 1158)
+        self.logout_dropdown.set_property("margin_right", 30)
 
         self.hbox2.set_halign(Gtk.Align.START)
         self.hbox2.pack_start(self.menu, True, True, 0)
@@ -632,8 +542,7 @@ class Equipment_list(Gtk.Window):
         Gtk.main()
         return
 
-
-
+#SCHEDULE JOB LIST
 class Schedule_list(Gtk.Window):
 
     def __init__(self):
@@ -734,8 +643,8 @@ class Schedule_list(Gtk.Window):
         self.complain_dropdown.set_property("margin_left", 10)
         self.complain_dropdown.set_property("margin_right", 10)
         self.reports_dropdown.set_property("margin_left", 10)
-        self.reports_dropdown.set_property("margin_right", 1100)
-        self.logout_dropdown.set_property("margin_right", 88)
+        self.reports_dropdown.set_property("margin_right", 1158)
+        self.logout_dropdown.set_property("margin_right", 30)
 
         self.hbox2.set_halign(Gtk.Align.START)
         self.hbox2.pack_start(self.menu, True, True, 0)
@@ -838,6 +747,7 @@ class Schedule_list(Gtk.Window):
         Gtk.main()
         return
 
+#ASSIGN JOB LIST
 class Assign_list(Gtk.Window):
 
     def __init__(self):
@@ -938,8 +848,8 @@ class Assign_list(Gtk.Window):
         self.complain_dropdown.set_property("margin_left", 10)
         self.complain_dropdown.set_property("margin_right", 10)
         self.reports_dropdown.set_property("margin_left", 10)
-        self.reports_dropdown.set_property("margin_right", 1100)
-        self.logout_dropdown.set_property("margin_right", 88)
+        self.reports_dropdown.set_property("margin_right", 1158)
+        self.logout_dropdown.set_property("margin_right", 30)
 
         self.hbox2.set_halign(Gtk.Align.START)
         self.hbox2.pack_start(self.menu, True, True, 0)
@@ -1043,9 +953,7 @@ class Assign_list(Gtk.Window):
         Gtk.main()
         return
 
-
-
-
+#EQUIPMENT FORM
 class Equipment_form(Gtk.Window):
 
     def __init__(self):
@@ -1173,36 +1081,7 @@ class Equipment_form(Gtk.Window):
         self.destroy()
         return
 
-
-
-
-class form_saved(Gtk.Dialog):
-
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Equipment form saved.", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("Form saved successfully."))
-        self.show_all()
-        return
-
-class form_save_error(Gtk.Dialog):
-
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("There is a problem in saving the form. Please try again."))
-        self.show_all()
-        return
-
-
+#SEARCH EQUIPMENT FORM
 class Search_equip(Gtk.Window):
 
     def __init__(self):
@@ -1301,18 +1180,7 @@ class Search_equip(Gtk.Window):
         self.destroy()
         return
 
-class Search_error(Gtk.Dialog):
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("Please enter a valid equipment name."))
-        self.show_all()
-        return
-
+#SCHEDULE FORM
 class Schedule_service(Gtk.Window):
 
     def __init__(self):
@@ -1475,6 +1343,7 @@ class Schedule_service(Gtk.Window):
         self.destroy()
         return
 
+#SEARCH SCHEDULE FORM
 class Search_schedule(Gtk.Window):
 
     def __init__(self):
@@ -1578,7 +1447,7 @@ class Search_schedule(Gtk.Window):
         self.destroy()
         return
 
-
+#ASSIGN JOB FORM
 class Assign_Job(Gtk.Window):
 
     def __init__(self):
@@ -1758,7 +1627,7 @@ class Assign_Job(Gtk.Window):
         self.destroy()
         return
 
-
+#SEARCH ASSIGN JOB
 class Search_assign(Gtk.Window):
 
     def __init__(self):
@@ -1867,7 +1736,142 @@ class Search_assign(Gtk.Window):
         self.destroy()
         return
 
+#DIALOG BOXES
+class Details(Gtk.Dialog):
 
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL,(Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("Username or Password Incorrect"))
+        self.show_all()
+        return
+
+
+class Number(Gtk.Dialog):
+
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("Invalid Personal Number or Password "))
+        self.show_all()
+        return
+
+
+class Error(Gtk.Dialog):
+
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL,(Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("Please enter all the details"))
+        self.show_all()
+        return
+
+
+class Exists(Gtk.Dialog):
+    def __init__(self, parent):
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("User already exists."))
+        self.show_all()
+        return
+
+
+class Account_created(Gtk.Dialog):
+
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Account Created", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("New Account Created. Please Login to Continue."))
+        self.show_all()
+        return
+
+
+class equipment_form_empty(Gtk.Dialog):
+
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("Please fill the equipment form before filling the Schedule form."))
+        self.show_all()
+        return
+
+
+class schedule_form_empty(Gtk.Dialog):
+
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("Please fill the Schedule form before filling the Assign form."))
+        self.show_all()
+        return
+
+
+class form_saved(Gtk.Dialog):
+
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Equipment form saved.", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("Form saved successfully."))
+        self.show_all()
+        return
+
+
+class form_save_error(Gtk.Dialog):
+
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("There is a problem in saving the form. Please try again."))
+        self.show_all()
+        return
+
+
+class Search_error(Gtk.Dialog):
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("Please enter a valid equipment name."))
+        self.show_all()
+        return
 
 
 window = Main_Window()
