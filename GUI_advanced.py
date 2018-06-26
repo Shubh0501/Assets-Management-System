@@ -12,7 +12,7 @@ search_equip = None
 search_schedule = None
 search_assign = None
 
-
+#MAIN WINDOW LOGIN PAGE
 class Main_Window(Gtk.Window):
 
     def __init__(self):
@@ -114,33 +114,7 @@ class Main_Window(Gtk.Window):
         Gtk.main()
         return
 
-class Details(Gtk.Dialog):
-
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL,(Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("Username or Password Incorrect"))
-        self.show_all()
-        return
-
-class Number(Gtk.Dialog):
-
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("Invalid Personal Number or Password "))
-        self.show_all()
-        return
-
-
+#NEW ACCOUNT CREATE FORM
 class New_account(Gtk.Window):
 
     def __init__(self):
@@ -229,43 +203,7 @@ class New_account(Gtk.Window):
                 dialog_exists.destroy()
                 return
 
-class Error(Gtk.Dialog):
-
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL,(Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("Please enter all the details"))
-        self.show_all()
-        return
-
-class Exists(Gtk.Dialog):
-    def __init__(self, parent):
-        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("User already exists."))
-        self.show_all()
-        return
-
-class Account_created(Gtk.Dialog):
-
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Account Created", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("New Account Created. Please Login to Continue."))
-        self.show_all()
-        return
-
+#USER PROFILE PAGE
 class User_profile(Gtk.Window):
 
     def __init__(self):
@@ -316,16 +254,16 @@ class User_profile(Gtk.Window):
         self.master_department = Gtk.MenuItem("Department")
         self.master.append(self.master_department)
         self.master_equipment = Gtk.MenuItem("Equipment")
-        self.master_equipment.connect("activate", self.call_equipment_form)
+        self.master_equipment.connect("activate", self.call_equipment_list)
         self.master.append(self.master_equipment)
         self.menu.append(self.master_dropdown)
         self.Schedule_menu = Gtk.Menu()
         self.schedule_dropdown = Gtk.MenuItem("SCHEDULE")
         self.schedule_dropdown.set_submenu(self.Schedule_menu)
         self.schedule_schedule = Gtk.MenuItem("Schedule")
-        self.schedule_schedule.connect("activate", self.call_schedule_service)
+        self.schedule_schedule.connect("activate", self.call_schedule_list)
         self.assign_schedule = Gtk.MenuItem("Assign Job")
-        self.assign_schedule.connect("activate", self.call_assign_job)
+        self.assign_schedule.connect("activate", self.call_assign_list)
         self.Schedule_menu.append(self.schedule_schedule)
         self.Schedule_menu.append(Gtk.SeparatorMenuItem())
         self.Schedule_menu.append(self.assign_schedule)
@@ -360,8 +298,8 @@ class User_profile(Gtk.Window):
         self.complain_dropdown.set_property("margin_left", 10)
         self.complain_dropdown.set_property("margin_right", 10)
         self.reports_dropdown.set_property("margin_left", 10)
-        self.reports_dropdown.set_property("margin_right", 1100)
-        self.logout_dropdown.set_property("margin_right", 88)
+        self.reports_dropdown.set_property("margin_right", 1158)
+        self.logout_dropdown.set_property("margin_right", 30)
 
         self.hbox2.set_halign(Gtk.Align.START)
         self.hbox2.pack_start(self.menu, True, True, 0)
@@ -369,7 +307,8 @@ class User_profile(Gtk.Window):
         self.add(self.box)
         return
 
-    def call_equipment_form(self, widget):
+    def call_equipment_list(self, widget):
+        self.destroy()
         new_window = Equipment_list()
         new_window.set_position(Gtk.WindowPosition.CENTER)
         new_window.connect("delete-event", Gtk.main_quit)
@@ -377,30 +316,18 @@ class User_profile(Gtk.Window):
         Gtk.main()
         return
 
-    def call_schedule_service(self, widget):
-        global equip_sl_no
-        if equip_sl_no == None:
-            dialog_empty_form = equipment_form_empty(self)
-            response = dialog_empty_form.run()
-            dialog_empty_form.destroy()
-            return
-
-        new_window = Schedule_service()
+    def call_schedule_list(self, widget):
+        self.destroy()
+        new_window = Schedule_list()
         new_window.set_position(Gtk.WindowPosition.CENTER)
         new_window.connect("delete-event", Gtk.main_quit)
         new_window.show_all()
         Gtk.main()
         return
 
-    def call_assign_job(self, widget):
-        global owner
-        if owner == None:
-            dialog_empty_form = schedule_form_empty(self)
-            response = dialog_empty_form.run()
-            dialog_empty_form.destroy()
-
-            return
-        new_window = Assign_Job()
+    def call_assign_list(self, widget):
+        self.destroy()
+        new_window = Assign_list()
         new_window.set_position(Gtk.WindowPosition.CENTER)
         new_window.connect("delete-event", Gtk.main_quit)
         new_window.show_all()
@@ -416,35 +343,7 @@ class User_profile(Gtk.Window):
         Gtk.main()
         return
 
-
-
-class equipment_form_empty(Gtk.Dialog):
-
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("Please fill the equipment form before filling the Schedule form."))
-        self.show_all()
-        return
-
-class schedule_form_empty(Gtk.Dialog):
-
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("Please fill the Schedule form before filling the Assign form."))
-        self.show_all()
-        return
-
-
+#EQUIPMENTS LIST
 class Equipment_list(Gtk.Window):
 
     def __init__(self):
@@ -455,7 +354,8 @@ class Equipment_list(Gtk.Window):
         self.set_default_size(1920,1080)
         self.box = Gtk.Box(orientation = Gtk.Orientation.VERTICAL, spacing = 0)
         self.hbox1 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
-        self.hbox2 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+        self.hbox2 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+        self.hbox3 = Gtk.Box(orientation = Gtk.Orientation.VERTICAL, spacing = 0)
 
         image = Gtk.Image()
         image.set_from_file('jusco_titl.jpg')
@@ -467,31 +367,111 @@ class Equipment_list(Gtk.Window):
         self.label = Gtk.Label()
         self.label.set_markup("<big><big><big><big><big><big><big><b>Equipments</b></big></big></big></big></big></big></big>")
         self.box.pack_start(self.hbox1, False, False, 0)
-        self.box.pack_start(self.label, False, False, 0)
         self.box.pack_start(self.hbox2, False, False, 0)
+        self.box.pack_start(self.label, False, False, 0)
+        self.box.pack_start(self.hbox3, False, False, 0)
+
+        self.menu = Gtk.MenuBar()
+        self.dashboard = Gtk.Menu()
+        self.dashboard_dropdown = Gtk.MenuItem("DASHBOARD")
+        self.dashboard_dropdown.set_submenu(self.dashboard)
+        self.dashboard_menu1 = Gtk.MenuItem("Menu Item 1")
+        self.dashboard.append(self.dashboard_menu1)
+        self.dashboard_menu2 = Gtk.MenuItem("Menu Item 2")
+        self.dashboard.append(self.dashboard_menu2)
+        self.dashboard_menu3 = Gtk.MenuItem("Menu Item 3")
+        self.dashboard.append(self.dashboard_menu3)
+        self.menu.append(self.dashboard_dropdown)
+        self.admin = Gtk.Menu()
+        self.admin_dropdown = Gtk.MenuItem("ADMIN")
+        self.admin_dropdown.set_submenu(self.admin)
+        self.admin_menu1 = Gtk.MenuItem("Menu Item 1")
+        self.admin.append(self.admin_menu1)
+        self.admin_menu2 = Gtk.MenuItem("Menu Item 2")
+        self.admin.append(self.admin_menu2)
+        self.admin_menu3 = Gtk.MenuItem("Menu Item 3")
+        self.admin.append(self.admin_menu3)
+        self.menu.append(self.admin_dropdown)
+        self.master = Gtk.Menu()
+        self.master_dropdown = Gtk.MenuItem("MASTER")
+        self.master_dropdown.set_submenu(self.master)
+        self.master_company = Gtk.MenuItem("Company")
+        self.master.append(self.master_company)
+        self.master_department = Gtk.MenuItem("Department")
+        self.master.append(self.master_department)
+        self.master_equipment = Gtk.MenuItem("Equipment")
+        self.master_equipment.connect("activate", self.call_equipment_list)
+        self.master.append(self.master_equipment)
+        self.menu.append(self.master_dropdown)
+        self.Schedule_menu = Gtk.Menu()
+        self.schedule_dropdown = Gtk.MenuItem("SCHEDULE")
+        self.schedule_dropdown.set_submenu(self.Schedule_menu)
+        self.schedule_schedule = Gtk.MenuItem("Schedule")
+        self.schedule_schedule.connect("activate", self.call_schedule_list)
+        self.assign_schedule = Gtk.MenuItem("Assign Job")
+        self.assign_schedule.connect("activate", self.call_assign_list)
+        self.Schedule_menu.append(self.schedule_schedule)
+        self.Schedule_menu.append(Gtk.SeparatorMenuItem())
+        self.Schedule_menu.append(self.assign_schedule)
+        self.menu.append(self.schedule_dropdown)
+        self.complain = Gtk.Menu()
+        self.complain_dropdown = Gtk.MenuItem("COMPLAIN")
+        self.complain_dropdown.set_submenu(self.complain)
+        self.complain_menu1 = Gtk.MenuItem("Menu Item 1")
+        self.complain.append(self.complain_menu1)
+        self.complain_menu2 = Gtk.MenuItem("Menu Item 2")
+        self.complain.append(self.complain_menu2)
+        self.menu.append(self.complain_dropdown)
+        self.reports = Gtk.Menu()
+        self.reports_dropdown = Gtk.MenuItem("REPORTS")
+        self.reports_dropdown.set_submenu(self.reports)
+        self.reports_menu1 = Gtk.MenuItem("Menu Item 1")
+        self.reports.append(self.reports_menu1)
+        self.menu.append(self.reports_dropdown)
+        self.logout_dropdown = Gtk.MenuItem("LOGOUT")
+        self.menu.append(self.logout_dropdown)
+        self.logout_dropdown.connect("activate", self.logout_call)
+
+        self.hbox2.set_hexpand(True)
+        self.dashboard_dropdown.set_property("margin_left", 20)
+        self.dashboard_dropdown.set_property("margin_right", 10)
+        self.admin_dropdown.set_property("margin_left", 10)
+        self.admin_dropdown.set_property("margin_right", 10)
+        self.master_dropdown.set_property("margin_left", 10)
+        self.master_dropdown.set_property("margin_right", 10)
+        self.schedule_dropdown.set_property("margin_left", 10)
+        self.schedule_dropdown.set_property("margin_right", 10)
+        self.complain_dropdown.set_property("margin_left", 10)
+        self.complain_dropdown.set_property("margin_right", 10)
+        self.reports_dropdown.set_property("margin_left", 10)
+        self.reports_dropdown.set_property("margin_right", 1158)
+        self.logout_dropdown.set_property("margin_right", 30)
+
+        self.hbox2.set_halign(Gtk.Align.START)
+        self.hbox2.pack_start(self.menu, True, True, 0)
 
         self.search_label = Gtk.Label("Enter the equipment to be searched :")
         self.search_label.set_property("margin_top", 100)
         self.search_label.set_property("margin_bottom", 10)
-        self.hbox2.pack_start(self.search_label, False, False, 0)
+        self.hbox3.pack_start(self.search_label, False, False, 0)
         self.search = Gtk.Entry()
         self.search.set_property("margin_top", 10)
         self.search.set_property("margin_bottom", 10)
-        self.hbox2.pack_start(self.search, False, False, 0)
+        self.hbox3.pack_start(self.search, False, False, 0)
         self.search_button = Gtk.Button("Search")
         self.search_button.set_property("margin_top", 10)
         self.search_button.set_property("margin_bottom", 10)
         self.search_button.set_property("margin_left", 40)
         self.search_button.set_property("margin_right", 40)
-        self.hbox2.pack_start(self.search_button, False, False, 0)
+        self.hbox3.pack_start(self.search_button, False, False, 0)
 
-        self.hbox2.set_halign(Gtk.Align.CENTER)
+        self.hbox3.set_halign(Gtk.Align.CENTER)
 
         self.new_button = Gtk.Button("New Equipment")
         self.new_button.set_property("margin_top", 10)
         self.new_button.set_property("margin_left", 40)
         self.new_button.set_property("margin_right", 40)
-        self.hbox2.pack_start(self.new_button, False, False, 0)
+        self.hbox3.pack_start(self.new_button, False, False, 0)
 
         self.new_button.connect("clicked", self.call_equipment_form)
         self.search_button.connect("clicked", self.search_button_clicked)
@@ -526,6 +506,454 @@ class Equipment_list(Gtk.Window):
         Gtk.main()
         return
 
+    def call_equipment_list(self, widget):
+        self.destroy()
+        new_window = Equipment_list()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+        return
+
+    def call_schedule_list(self, widget):
+        self.destroy()
+        new_window = Schedule_list()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+        return
+
+    def call_assign_list(self, widget):
+        self.destroy()
+        new_window = Assign_list()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+        return
+
+    def logout_call(self, widget):
+        self.destroy()
+        window = Main_Window()
+        window.set_position(Gtk.WindowPosition.CENTER)
+        window.connect("delete-event", Gtk.main_quit)
+        window.show_all()
+        Gtk.main()
+        return
+
+#SCHEDULE JOB LIST
+class Schedule_list(Gtk.Window):
+
+    def __init__(self):
+
+        Gtk.Window.__init__(self, title = "Schedule List")
+
+        self.set_border_width(5)
+        self.set_default_size(1920,1080)
+        self.box = Gtk.Box(orientation = Gtk.Orientation.VERTICAL, spacing = 0)
+        self.hbox1 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+        self.hbox2 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+        self.hbox3 = Gtk.Box(orientation = Gtk.Orientation.VERTICAL, spacing = 0)
+
+        image = Gtk.Image()
+        image.set_from_file('jusco_titl.jpg')
+        self.hbox1.add(image)
+        self.hbox1.set_hexpand(True)
+        self.hbox1.set_halign(Gtk.Align.CENTER)
+        self.hbox1.show_all()
+
+        self.label = Gtk.Label()
+        self.label.set_markup("<big><big><big><big><big><big><big><b>Scheduled Services</b></big></big></big></big></big></big></big>")
+        self.box.pack_start(self.hbox1, False, False, 0)
+        self.box.pack_start(self.hbox2, False, False, 0)
+        self.box.pack_start(self.label, False, False, 0)
+        self.box.pack_start(self.hbox3, False, False, 0)
+
+        self.menu = Gtk.MenuBar()
+        self.dashboard = Gtk.Menu()
+        self.dashboard_dropdown = Gtk.MenuItem("DASHBOARD")
+        self.dashboard_dropdown.set_submenu(self.dashboard)
+        self.dashboard_menu1 = Gtk.MenuItem("Menu Item 1")
+        self.dashboard.append(self.dashboard_menu1)
+        self.dashboard_menu2 = Gtk.MenuItem("Menu Item 2")
+        self.dashboard.append(self.dashboard_menu2)
+        self.dashboard_menu3 = Gtk.MenuItem("Menu Item 3")
+        self.dashboard.append(self.dashboard_menu3)
+        self.menu.append(self.dashboard_dropdown)
+        self.admin = Gtk.Menu()
+        self.admin_dropdown = Gtk.MenuItem("ADMIN")
+        self.admin_dropdown.set_submenu(self.admin)
+        self.admin_menu1 = Gtk.MenuItem("Menu Item 1")
+        self.admin.append(self.admin_menu1)
+        self.admin_menu2 = Gtk.MenuItem("Menu Item 2")
+        self.admin.append(self.admin_menu2)
+        self.admin_menu3 = Gtk.MenuItem("Menu Item 3")
+        self.admin.append(self.admin_menu3)
+        self.menu.append(self.admin_dropdown)
+        self.master = Gtk.Menu()
+        self.master_dropdown = Gtk.MenuItem("MASTER")
+        self.master_dropdown.set_submenu(self.master)
+        self.master_company = Gtk.MenuItem("Company")
+        self.master.append(self.master_company)
+        self.master_department = Gtk.MenuItem("Department")
+        self.master.append(self.master_department)
+        self.master_equipment = Gtk.MenuItem("Equipment")
+        self.master_equipment.connect("activate", self.call_equipment_list)
+        self.master.append(self.master_equipment)
+        self.menu.append(self.master_dropdown)
+        self.Schedule_menu = Gtk.Menu()
+        self.schedule_dropdown = Gtk.MenuItem("SCHEDULE")
+        self.schedule_dropdown.set_submenu(self.Schedule_menu)
+        self.schedule_schedule = Gtk.MenuItem("Schedule")
+        self.schedule_schedule.connect("activate", self.call_schedule_list)
+        self.assign_schedule = Gtk.MenuItem("Assign Job")
+        self.assign_schedule.connect("activate", self.call_assign_list)
+        self.Schedule_menu.append(self.schedule_schedule)
+        self.Schedule_menu.append(Gtk.SeparatorMenuItem())
+        self.Schedule_menu.append(self.assign_schedule)
+        self.menu.append(self.schedule_dropdown)
+        self.complain = Gtk.Menu()
+        self.complain_dropdown = Gtk.MenuItem("COMPLAIN")
+        self.complain_dropdown.set_submenu(self.complain)
+        self.complain_menu1 = Gtk.MenuItem("Menu Item 1")
+        self.complain.append(self.complain_menu1)
+        self.complain_menu2 = Gtk.MenuItem("Menu Item 2")
+        self.complain.append(self.complain_menu2)
+        self.menu.append(self.complain_dropdown)
+        self.reports = Gtk.Menu()
+        self.reports_dropdown = Gtk.MenuItem("REPORTS")
+        self.reports_dropdown.set_submenu(self.reports)
+        self.reports_menu1 = Gtk.MenuItem("Menu Item 1")
+        self.reports.append(self.reports_menu1)
+        self.menu.append(self.reports_dropdown)
+        self.logout_dropdown = Gtk.MenuItem("LOGOUT")
+        self.menu.append(self.logout_dropdown)
+        self.logout_dropdown.connect("activate", self.logout_call)
+
+        self.hbox2.set_hexpand(True)
+        self.dashboard_dropdown.set_property("margin_left", 20)
+        self.dashboard_dropdown.set_property("margin_right", 10)
+        self.admin_dropdown.set_property("margin_left", 10)
+        self.admin_dropdown.set_property("margin_right", 10)
+        self.master_dropdown.set_property("margin_left", 10)
+        self.master_dropdown.set_property("margin_right", 10)
+        self.schedule_dropdown.set_property("margin_left", 10)
+        self.schedule_dropdown.set_property("margin_right", 10)
+        self.complain_dropdown.set_property("margin_left", 10)
+        self.complain_dropdown.set_property("margin_right", 10)
+        self.reports_dropdown.set_property("margin_left", 10)
+        self.reports_dropdown.set_property("margin_right", 1158)
+        self.logout_dropdown.set_property("margin_right", 30)
+
+        self.hbox2.set_halign(Gtk.Align.START)
+        self.hbox2.pack_start(self.menu, True, True, 0)
+
+        self.search_label = Gtk.Label("Enter the equipment to be searched :")
+        self.search_label.set_property("margin_top", 100)
+        self.search_label.set_property("margin_bottom", 10)
+        self.hbox3.pack_start(self.search_label, False, False, 0)
+        self.search = Gtk.Entry()
+        self.search.set_property("margin_top", 10)
+        self.search.set_property("margin_bottom", 10)
+        self.hbox3.pack_start(self.search, False, False, 0)
+        self.search_button = Gtk.Button("Search")
+        self.search_button.set_property("margin_top", 10)
+        self.search_button.set_property("margin_bottom", 10)
+        self.search_button.set_property("margin_left", 40)
+        self.search_button.set_property("margin_right", 40)
+        self.hbox3.pack_start(self.search_button, False, False, 0)
+
+        self.hbox3.set_halign(Gtk.Align.CENTER)
+
+        self.new_button = Gtk.Button("Schedule new service")
+        self.new_button.set_property("margin_top", 10)
+        self.new_button.set_property("margin_left", 40)
+        self.new_button.set_property("margin_right", 40)
+        self.hbox3.pack_start(self.new_button, False, False, 0)
+
+        self.new_button.connect("clicked", self.call_schedule_form)
+        self.search_button.connect("clicked", self.search_button_clicked)
+
+        self.add(self.box)
+        self.show_all()
+        return
+
+    def call_schedule_form(self, widget):
+        global equip_sl_no
+        if equip_sl_no == None:
+            dialog_empty_form = equipment_form_empty(self)
+            response = dialog_empty_form.run()
+            dialog_empty_form.destroy()
+            return
+        new_window = Schedule_service()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+        return
+
+    def search_button_clicked(self, widget):
+        global search_schedule
+        search_schedule = self.search.get_text()
+        try:
+            details = auth.Schedule.objects.get(equip_name=search_schedule)
+        except Exception as e:
+            dialog_number = Search_error(self)
+            response = dialog_number.run()
+            dialog_number.destroy()
+            return
+
+        new_window = Search_schedule()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+        return
+
+    def call_equipment_list(self, widget):
+        self.destroy()
+        new_window = Equipment_list()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+        return
+
+    def call_schedule_list(self, widget):
+        self.destroy()
+        new_window = Schedule_list()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+        return
+
+    def call_assign_list(self, widget):
+        self.destroy()
+        new_window = Assign_list()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+        return
+
+    def logout_call(self, widget):
+        self.destroy()
+        window = Main_Window()
+        window.set_position(Gtk.WindowPosition.CENTER)
+        window.connect("delete-event", Gtk.main_quit)
+        window.show_all()
+        Gtk.main()
+        return
+
+#ASSIGN JOB LIST
+class Assign_list(Gtk.Window):
+
+    def __init__(self):
+
+        Gtk.Window.__init__(self, title = "Job Assign List")
+
+        self.set_border_width(5)
+        self.set_default_size(1920,1080)
+        self.box = Gtk.Box(orientation = Gtk.Orientation.VERTICAL, spacing = 0)
+        self.hbox1 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+        self.hbox2 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+        self.hbox3 = Gtk.Box(orientation = Gtk.Orientation.VERTICAL, spacing = 0)
+
+        image = Gtk.Image()
+        image.set_from_file('jusco_titl.jpg')
+        self.hbox1.add(image)
+        self.hbox1.set_hexpand(True)
+        self.hbox1.set_halign(Gtk.Align.CENTER)
+        self.hbox1.show_all()
+
+        self.label = Gtk.Label()
+        self.label.set_markup("<big><big><big><big><big><big><big><b>Assigned Jobs</b></big></big></big></big></big></big></big>")
+        self.box.pack_start(self.hbox1, False, False, 0)
+        self.box.pack_start(self.hbox2, False, False, 0)
+        self.box.pack_start(self.label, False, False, 0)
+        self.box.pack_start(self.hbox3, False, False, 0)
+
+        self.menu = Gtk.MenuBar()
+        self.dashboard = Gtk.Menu()
+        self.dashboard_dropdown = Gtk.MenuItem("DASHBOARD")
+        self.dashboard_dropdown.set_submenu(self.dashboard)
+        self.dashboard_menu1 = Gtk.MenuItem("Menu Item 1")
+        self.dashboard.append(self.dashboard_menu1)
+        self.dashboard_menu2 = Gtk.MenuItem("Menu Item 2")
+        self.dashboard.append(self.dashboard_menu2)
+        self.dashboard_menu3 = Gtk.MenuItem("Menu Item 3")
+        self.dashboard.append(self.dashboard_menu3)
+        self.menu.append(self.dashboard_dropdown)
+        self.admin = Gtk.Menu()
+        self.admin_dropdown = Gtk.MenuItem("ADMIN")
+        self.admin_dropdown.set_submenu(self.admin)
+        self.admin_menu1 = Gtk.MenuItem("Menu Item 1")
+        self.admin.append(self.admin_menu1)
+        self.admin_menu2 = Gtk.MenuItem("Menu Item 2")
+        self.admin.append(self.admin_menu2)
+        self.admin_menu3 = Gtk.MenuItem("Menu Item 3")
+        self.admin.append(self.admin_menu3)
+        self.menu.append(self.admin_dropdown)
+        self.master = Gtk.Menu()
+        self.master_dropdown = Gtk.MenuItem("MASTER")
+        self.master_dropdown.set_submenu(self.master)
+        self.master_company = Gtk.MenuItem("Company")
+        self.master.append(self.master_company)
+        self.master_department = Gtk.MenuItem("Department")
+        self.master.append(self.master_department)
+        self.master_equipment = Gtk.MenuItem("Equipment")
+        self.master_equipment.connect("activate", self.call_equipment_list)
+        self.master.append(self.master_equipment)
+        self.menu.append(self.master_dropdown)
+        self.Schedule_menu = Gtk.Menu()
+        self.schedule_dropdown = Gtk.MenuItem("SCHEDULE")
+        self.schedule_dropdown.set_submenu(self.Schedule_menu)
+        self.schedule_schedule = Gtk.MenuItem("Schedule")
+        self.schedule_schedule.connect("activate", self.call_schedule_list)
+        self.assign_schedule = Gtk.MenuItem("Assign Job")
+        self.assign_schedule.connect("activate", self.call_assign_list)
+        self.Schedule_menu.append(self.schedule_schedule)
+        self.Schedule_menu.append(Gtk.SeparatorMenuItem())
+        self.Schedule_menu.append(self.assign_schedule)
+        self.menu.append(self.schedule_dropdown)
+        self.complain = Gtk.Menu()
+        self.complain_dropdown = Gtk.MenuItem("COMPLAIN")
+        self.complain_dropdown.set_submenu(self.complain)
+        self.complain_menu1 = Gtk.MenuItem("Menu Item 1")
+        self.complain.append(self.complain_menu1)
+        self.complain_menu2 = Gtk.MenuItem("Menu Item 2")
+        self.complain.append(self.complain_menu2)
+        self.menu.append(self.complain_dropdown)
+        self.reports = Gtk.Menu()
+        self.reports_dropdown = Gtk.MenuItem("REPORTS")
+        self.reports_dropdown.set_submenu(self.reports)
+        self.reports_menu1 = Gtk.MenuItem("Menu Item 1")
+        self.reports.append(self.reports_menu1)
+        self.menu.append(self.reports_dropdown)
+        self.logout_dropdown = Gtk.MenuItem("LOGOUT")
+        self.menu.append(self.logout_dropdown)
+        self.logout_dropdown.connect("activate", self.logout_call)
+
+        self.hbox2.set_hexpand(True)
+        self.dashboard_dropdown.set_property("margin_left", 20)
+        self.dashboard_dropdown.set_property("margin_right", 10)
+        self.admin_dropdown.set_property("margin_left", 10)
+        self.admin_dropdown.set_property("margin_right", 10)
+        self.master_dropdown.set_property("margin_left", 10)
+        self.master_dropdown.set_property("margin_right", 10)
+        self.schedule_dropdown.set_property("margin_left", 10)
+        self.schedule_dropdown.set_property("margin_right", 10)
+        self.complain_dropdown.set_property("margin_left", 10)
+        self.complain_dropdown.set_property("margin_right", 10)
+        self.reports_dropdown.set_property("margin_left", 10)
+        self.reports_dropdown.set_property("margin_right", 1158)
+        self.logout_dropdown.set_property("margin_right", 30)
+
+        self.hbox2.set_halign(Gtk.Align.START)
+        self.hbox2.pack_start(self.menu, True, True, 0)
+
+        self.search_label = Gtk.Label("Enter the equipment to be searched :")
+        self.search_label.set_property("margin_top", 100)
+        self.search_label.set_property("margin_bottom", 10)
+        self.hbox3.pack_start(self.search_label, False, False, 0)
+        self.search = Gtk.Entry()
+        self.search.set_property("margin_top", 10)
+        self.search.set_property("margin_bottom", 10)
+        self.hbox3.pack_start(self.search, False, False, 0)
+        self.search_button = Gtk.Button("Search")
+        self.search_button.set_property("margin_top", 10)
+        self.search_button.set_property("margin_bottom", 10)
+        self.search_button.set_property("margin_left", 40)
+        self.search_button.set_property("margin_right", 40)
+        self.hbox3.pack_start(self.search_button, False, False, 0)
+
+        self.hbox3.set_halign(Gtk.Align.CENTER)
+
+        self.new_button = Gtk.Button("Assign New Job")
+        self.new_button.set_property("margin_top", 10)
+        self.new_button.set_property("margin_left", 40)
+        self.new_button.set_property("margin_right", 40)
+        self.hbox3.pack_start(self.new_button, False, False, 0)
+
+        self.new_button.connect("clicked", self.call_assign_form)
+        self.search_button.connect("clicked", self.search_button_clicked)
+
+        self.add(self.box)
+        self.show_all()
+        return
+
+    def call_assign_form(self, widget):
+        global owner
+        if owner == None:
+            dialog_empty_form = schedule_form_empty(self)
+            response = dialog_empty_form.run()
+            dialog_empty_form.destroy()
+
+            return
+        new_window = Schedule_service()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+        return
+
+    def search_button_clicked(self, widget):
+        global search_assign
+        search_assign = self.search.get_text()
+        try:
+            details = auth.Assign.objects.get(equip_name=search_assign)
+        except Exception as e:
+            dialog_number = Search_error(self)
+            response = dialog_number.run()
+            dialog_number.destroy()
+            return
+
+        new_window = Search_assign()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+        return
+
+    def call_equipment_list(self, widget):
+        self.destroy()
+        new_window = Equipment_list()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+        return
+
+    def call_schedule_list(self, widget):
+        self.destroy()
+        new_window = Schedule_list()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+        return
+
+    def call_assign_list(self, widget):
+        self.destroy()
+        new_window = Assign_list()
+        new_window.set_position(Gtk.WindowPosition.CENTER)
+        new_window.connect("delete-event", Gtk.main_quit)
+        new_window.show_all()
+        Gtk.main()
+        return
+
+    def logout_call(self, widget):
+        self.destroy()
+        window = Main_Window()
+        window.set_position(Gtk.WindowPosition.CENTER)
+        window.connect("delete-event", Gtk.main_quit)
+        window.show_all()
+        Gtk.main()
+        return
+
+#EQUIPMENT FORM
 class Equipment_form(Gtk.Window):
 
     def __init__(self):
@@ -609,7 +1037,6 @@ class Equipment_form(Gtk.Window):
                 len(self.trade.get_text()) == 0 or \
                 len(self.equipment_code.get_text()) == 0 or \
                 len(self.equipment_sl_no.get_text()) == 0 or \
-                len(self.parent_equipment.get_text()) == 0 or \
                 len(self.section.get_text()) == 0 or \
                 len(self.sub_location.get_text()) == 0 or \
                 len(self.category.get_text()) == 0 or \
@@ -654,36 +1081,7 @@ class Equipment_form(Gtk.Window):
         self.destroy()
         return
 
-
-
-
-class form_saved(Gtk.Dialog):
-
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Equipment form saved.", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("Form saved successfully."))
-        self.show_all()
-        return
-
-class form_save_error(Gtk.Dialog):
-
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("There is a problem in saving the form. Please try again."))
-        self.show_all()
-        return
-
-
+#SEARCH EQUIPMENT FORM
 class Search_equip(Gtk.Window):
 
     def __init__(self):
@@ -782,18 +1180,7 @@ class Search_equip(Gtk.Window):
         self.destroy()
         return
 
-class Search_error(Gtk.Dialog):
-    def __init__(self, parent):
-
-        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        self.set_default_size(130, 80)
-        self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        area = self.get_content_area()
-        area.add(Gtk.Label("Please enter a valid equipment name."))
-        self.show_all()
-        return
-
+#SCHEDULE FORM
 class Schedule_service(Gtk.Window):
 
     def __init__(self):
@@ -956,6 +1343,111 @@ class Schedule_service(Gtk.Window):
         self.destroy()
         return
 
+#SEARCH SCHEDULE FORM
+class Search_schedule(Gtk.Window):
+
+    def __init__(self):
+
+        Gtk.Window.__init__(self, title="Equipment Details")
+        self.set_border_width(10)
+        self.set_default_size(850, 300)
+
+        self.hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+        self.vbox_left = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+        self.vbox_right = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+
+        self.hbox.pack_start(self.vbox_left, True, True, 0)
+        self.hbox.pack_start(self.vbox_right, True, True, 0)
+
+        global search_schedule
+        try:
+            details = auth.Schedule.objects.get(equip_name=search_schedule)
+        except Exception as e:
+            dialog_number = Search_error(self)
+            response = dialog_number.run()
+            dialog_number.destroy()
+            return
+
+        self.section_label = Gtk.Label("Section")
+        self.section = Gtk.Entry()
+        self.section.set_text(details.section)
+        self.vbox_left.pack_start(self.section_label, True, True, 3)
+        self.vbox_left.pack_start(self.section, True, True, 3)
+        self.sub_loc_label = Gtk.Label("Sub Location")
+        self.sub_loc = Gtk.Entry()
+        self.sub_loc.set_text(details.sub_loc)
+        self.vbox_left.pack_start(self.sub_loc_label, True, True, 3)
+        self.vbox_left.pack_start(self.sub_loc, True, True, 3)
+        self.task_label = Gtk.Label("Task")
+        self.task = Gtk.Entry()
+        self.task.set_text(details.task)
+        self.vbox_left.pack_start(self.task_label, True, True, 3)
+        self.vbox_left.pack_start(self.task, True, True, 3)
+        self.inform_to_label = Gtk.Label("Inform to (If any)")
+        self.inform_to = Gtk.Entry()
+        self.inform_to.set_text(details.inform_to)
+        self.vbox_left.pack_start(self.inform_to_label, True, True, 3)
+        self.vbox_left.pack_start(self.inform_to, True, True, 3)
+        self.prev_main_label = Gtk.Label("Preventive Maintenance")
+        self.prev_main = Gtk.Entry()
+        self.prev_main.set_text(details.prev_main)
+        self.vbox_left.pack_start(self.prev_main_label, True, True, 3)
+        self.vbox_left.pack_start(self.prev_main, True, True, 3)
+        self.freque_label = Gtk.Label("PM Frequency(in days)")
+        self.freque = Gtk.Entry()
+        self.freque.set_text(details.freq)
+        self.vbox_left.pack_start(self.freque_label, True, True, 3)
+        self.vbox_left.pack_start(self.freque, True, True, 3)
+        self.reminder_label = Gtk.Label("Reminder before PM date(in days)")
+        self.reminder = Gtk.Entry()
+        self.reminder.set_text(details.reminder)
+        self.vbox_left.pack_start(self.reminder_label, True, True, 3)
+        self.vbox_left.pack_start(self.reminder, True, True, 3)
+
+        self.loc_label = Gtk.Label("Location")
+        self.loc = Gtk.Entry()
+        self.loc.set_text(details.loc)
+        self.vbox_right.pack_start(self.loc_label, True, True, 3)
+        self.vbox_right.pack_start(self.loc, True, True, 3)
+        self.equip_label = Gtk.Label("Equipment")
+        self.equip = Gtk.Entry()
+        self.equip.set_text(details.equip_name)
+        self.vbox_right.pack_start(self.equip_label, True, True, 3)
+        self.vbox_right.pack_start(self.equip, True, True, 3)
+        self.owner_label = Gtk.Label("PM Owner")
+        self.owner = Gtk.Entry()
+        self.owner.set_text(details.owner)
+        self.vbox_right.pack_start(self.owner_label, True, True, 3)
+        self.vbox_right.pack_start(self.owner, True, True, 3)
+        self.code_label = Gtk.Label("PM Code")
+        self.code = Gtk.Entry()
+        self.code.set_text(details.code)
+        self.vbox_right.pack_start(self.code_label, True, True, 3)
+        self.vbox_right.pack_start(self.code, True, True, 3)
+        self.date_label = Gtk.Label("PM Date")
+        self.date = Gtk.Entry()
+        self.date.set_text(details.date)
+        self.vbox_right.pack_start(self.date_label, True, True, 3)
+        self.vbox_right.pack_start(self.date, True, True, 3)
+        self.next_date_label = Gtk.Label("Next PM Date")
+        self.vbox_right.pack_start(self.next_date_label, True, True, 3)
+        self.next_date = Gtk.Entry()
+        self.next_date.set_text(details.next_date)
+        self.vbox_right.pack_start(self.next_date, True, True, 3)
+
+        self.ok_button = Gtk.Button("OK")
+        self.vbox_right.pack_start(self.ok_button, False, False, 3)
+        self.ok_button.connect("clicked", self.ok_button_clicked)
+
+        self.add(self.hbox)
+
+        return
+
+    def ok_button_clicked(self, widget):
+        self.destroy()
+        return
+
+#ASSIGN JOB FORM
 class Assign_Job(Gtk.Window):
 
     def __init__(self):
@@ -973,7 +1465,7 @@ class Assign_Job(Gtk.Window):
         global owner
         details = auth.Schedule.objects.get(owner= owner)
 
-        section = details.section#GUI_Upgraded
+        section = details.section
         sub_loc = details.sub_loc
         task = details.task
         inform_to = details.inform_to
@@ -1135,7 +1627,251 @@ class Assign_Job(Gtk.Window):
         self.destroy()
         return
 
+#SEARCH ASSIGN JOB
+class Search_assign(Gtk.Window):
 
+    def __init__(self):
+
+        Gtk.Window.__init__(self, title="Equipment Details")
+        self.set_border_width(10)
+        self.set_default_size(850, 300)
+
+        self.hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+        self.vbox_left = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+        self.vbox_right = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+
+        self.hbox.pack_start(self.vbox_left, True, True, 0)
+        self.hbox.pack_start(self.vbox_right, True, True, 0)
+
+        global search_assign
+        try:
+            details = auth.Assign.objects.get(equip_name=search_assign)
+        except Exception as e:
+            dialog_number = Search_error(self)
+            response = dialog_number.run()
+            dialog_number.destroy()
+            return
+
+        self.section_label = Gtk.Label("Section")
+        self.section = Gtk.Entry()
+        self.section.set_text(details.section)
+        self.vbox_left.pack_start(self.section_label, True, True, 3)
+        self.vbox_left.pack_start(self.section, True, True, 3)
+        self.sub_loc_label = Gtk.Label("Sub Location")
+        self.sub_loc = Gtk.Entry()
+        self.sub_loc.set_text(details.sub_loc)
+        self.vbox_left.pack_start(self.sub_loc_label, True, True, 3)
+        self.vbox_left.pack_start(self.sub_loc, True, True, 3)
+        self.task_label = Gtk.Label("Task")
+        self.task = Gtk.Entry()
+        self.task.set_text(details.task)
+        self.vbox_left.pack_start(self.task_label, True, True, 3)
+        self.vbox_left.pack_start(self.task, True, True, 3)
+        self.inform_to_label = Gtk.Label("Inform to (If any)")
+        self.inform_to = Gtk.Entry()
+        self.inform_to.set_text(details.inform_to)
+        self.vbox_left.pack_start(self.inform_to_label, True, True, 3)
+        self.vbox_left.pack_start(self.inform_to, True, True, 3)
+        self.prev_main_label = Gtk.Label("Preventive Maintenance")
+        self.prev_main = Gtk.Entry()
+        self.prev_main.set_text(details.prev_main)
+        self.vbox_left.pack_start(self.prev_main_label, True, True, 3)
+        self.vbox_left.pack_start(self.prev_main, True, True, 3)
+        self.freque_label = Gtk.Label("PM Frequency(in days)")
+        self.freque = Gtk.Entry()
+        self.freque.set_text(details.freq)
+        self.vbox_left.pack_start(self.freque_label, True, True, 3)
+        self.vbox_left.pack_start(self.freque, True, True, 3)
+        self.reminder_label = Gtk.Label("Reminder before PM date(in days)")
+        self.reminder = Gtk.Entry()
+        self.reminder.set_text(details.reminder)
+        self.vbox_left.pack_start(self.reminder_label, True, True, 3)
+        self.vbox_left.pack_start(self.reminder, True, True, 3)
+
+        self.loc_label = Gtk.Label("Location")
+        self.loc = Gtk.Entry()
+        self.loc.set_text(details.loc)
+        self.vbox_right.pack_start(self.loc_label, True, True, 3)
+        self.vbox_right.pack_start(self.loc, True, True, 3)
+        self.equip_label = Gtk.Label("Equipment")
+        self.equip = Gtk.Entry()
+        self.equip.set_text(details.equip_name)
+        self.vbox_right.pack_start(self.equip_label, True, True, 3)
+        self.vbox_right.pack_start(self.equip, True, True, 3)
+        self.owner_label = Gtk.Label("PM Owner")
+        self.owner = Gtk.Entry()
+        self.owner.set_text(details.owner)
+        self.vbox_right.pack_start(self.owner_label, True, True, 3)
+        self.vbox_right.pack_start(self.owner, True, True, 3)
+        self.code_label = Gtk.Label("PM Code")
+        self.code = Gtk.Entry()
+        self.code.set_text(details.code)
+        self.vbox_right.pack_start(self.code_label, True, True, 3)
+        self.vbox_right.pack_start(self.code, True, True, 3)
+        self.date_label = Gtk.Label("PM Date")
+        self.date = Gtk.Entry()
+        self.date.set_text(details.date)
+        self.vbox_right.pack_start(self.date_label, True, True, 3)
+        self.vbox_right.pack_start(self.date, True, True, 3)
+        self.next_date_label = Gtk.Label("Next PM Date")
+        self.vbox_right.pack_start(self.next_date_label, True, True, 3)
+        self.next_date = Gtk.Entry()
+        self.next_date.set_text(details.next_date)
+        self.vbox_right.pack_start(self.next_date, True, True, 3)
+        self.assign_label = Gtk.Label("Assign Job to")
+        self.vbox_right.pack_start(self.assign_label, True, True, 3)
+        self.assign = Gtk.Entry()
+        self.assign.set_text(details.assign)
+        self.vbox_right.pack_start(self.assign, True, True, 3)
+
+        self.ok_button = Gtk.Button("OK")
+        self.vbox_right.pack_start(self.ok_button, False, False, 3)
+        self.ok_button.connect("clicked", self.ok_button_clicked)
+
+        self.add(self.hbox)
+
+        return
+
+    def ok_button_clicked(self, widget):
+        self.destroy()
+        return
+
+#DIALOG BOXES
+class Details(Gtk.Dialog):
+
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL,(Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("Username or Password Incorrect"))
+        self.show_all()
+        return
+
+
+class Number(Gtk.Dialog):
+
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("Invalid Personal Number or Password "))
+        self.show_all()
+        return
+
+
+class Error(Gtk.Dialog):
+
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL,(Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("Please enter all the details"))
+        self.show_all()
+        return
+
+
+class Exists(Gtk.Dialog):
+    def __init__(self, parent):
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("User already exists."))
+        self.show_all()
+        return
+
+
+class Account_created(Gtk.Dialog):
+
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Account Created", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("New Account Created. Please Login to Continue."))
+        self.show_all()
+        return
+
+
+class equipment_form_empty(Gtk.Dialog):
+
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("Please fill the equipment form before filling the Schedule form."))
+        self.show_all()
+        return
+
+
+class schedule_form_empty(Gtk.Dialog):
+
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("Please fill the Schedule form before filling the Assign form."))
+        self.show_all()
+        return
+
+
+class form_saved(Gtk.Dialog):
+
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Equipment form saved.", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("Form saved successfully."))
+        self.show_all()
+        return
+
+
+class form_save_error(Gtk.Dialog):
+
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("There is a problem in saving the form. Please try again."))
+        self.show_all()
+        return
+
+
+class Search_error(Gtk.Dialog):
+    def __init__(self, parent):
+
+        Gtk.Dialog.__init__(self, "Error", parent, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self.set_default_size(130, 80)
+        self.set_border_width(20)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        area = self.get_content_area()
+        area.add(Gtk.Label("Please enter a valid equipment name."))
+        self.show_all()
+        return
 
 
 window = Main_Window()
