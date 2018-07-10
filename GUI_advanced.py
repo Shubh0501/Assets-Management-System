@@ -26,6 +26,10 @@ class Main_Window(Gtk.Window):
         self.title.set_markup("<big><big><big><big><big><big><big><big><b>Login Page</b></big></big></big></big></big></big></big></big>")
         self.box.pack_start(self.title, False, False, 40)
 
+
+
+
+
         self.username_label = Gtk.Label()
         self.username_label.set_markup("<big>Username :</big>")
         self.box.pack_start(self.username_label, False, False, 0)
@@ -365,7 +369,7 @@ class Equipment_list(Gtk.Window):
         self.hbox1.show_all()
 
         self.label = Gtk.Label()
-        self.label.set_markup("<big><big><big><big><big><big><big><b>Equipments</b></big></big></big></big></big></big></big>")
+        self.label.set_markup("<big><big><big><big><big><big><big><b>EQUIPMENTS</b></big></big></big></big></big></big></big>")
         self.box.pack_start(self.hbox1, False, False, 0)
         self.box.pack_start(self.hbox2, False, False, 0)
         self.box.pack_start(self.label, False, False, 0)
@@ -564,7 +568,7 @@ class Schedule_list(Gtk.Window):
         self.hbox1.show_all()
 
         self.label = Gtk.Label()
-        self.label.set_markup("<big><big><big><big><big><big><big><b>Scheduled Services</b></big></big></big></big></big></big></big>")
+        self.label.set_markup("<big><big><big><big><big><big><big><b>SCHEDULED SERVICES</b></big></big></big></big></big></big></big>")
         self.box.pack_start(self.hbox1, False, False, 0)
         self.box.pack_start(self.hbox2, False, False, 0)
         self.box.pack_start(self.label, False, False, 0)
@@ -769,7 +773,7 @@ class Assign_list(Gtk.Window):
         self.hbox1.show_all()
 
         self.label = Gtk.Label()
-        self.label.set_markup("<big><big><big><big><big><big><big><b>Assigned Jobs</b></big></big></big></big></big></big></big>")
+        self.label.set_markup("<big><big><big><big><big><big><big><b>ASSIGNED JOBS</b></big></big></big></big></big></big></big>")
         self.box.pack_start(self.hbox1, False, False, 0)
         self.box.pack_start(self.hbox2, False, False, 0)
         self.box.pack_start(self.label, False, False, 0)
@@ -973,6 +977,17 @@ class Equipment_form(Gtk.Window):
         self.vbox_left.pack_start(self.department_label, True, True, 3)
         self.department = Gtk.Entry()
         self.vbox_left.pack_start(self.department, True, True, 3)
+
+        self.department_list = ["A", "B", "C", "D"]
+        completion_department = Gtk.EntryCompletion()
+        self.department_liststore = Gtk.ListStore(str)
+        for text in self.department_list:
+            self.department_liststore.append([text])
+
+        completion_department.set_model(self.department_liststore)
+        completion_department.set_text_column(0)
+        self.department.set_completion(completion_department)
+
         self.location_label = Gtk.Label()
         self.location_label.set_markup("<b>Location</b>")
         self.vbox_left.pack_start(self.location_label, True, True, 3)
@@ -998,6 +1013,16 @@ class Equipment_form(Gtk.Window):
         self.section_label.set_markup("<b>Section</b>")
         self.vbox_right.pack_start(self.section_label, False, True, 3)
         self.section = Gtk.Entry()
+
+        self.section_list = ["A1", "A2","A3","B1","B2","B3","C1","C2","C3","D1","D2","D3"]
+        completion_section = Gtk.EntryCompletion()
+        self.section_liststore = Gtk.ListStore(str)
+        for text in self.section_list:
+            self.section_liststore.append([text])
+        completion_section.set_model(self.section_liststore)
+        completion_section.set_text_column(0)
+        self.section.set_completion(completion_section)
+
         self.vbox_right.pack_start(self.section, False, True, 3)
         self.sub_location_label = Gtk.Label()
         self.sub_location_label.set_markup("<b>Sub Location</b>")
@@ -1218,6 +1243,20 @@ class Schedule_service(Gtk.Window):
         self.vbox_left.pack_start(self.task, True,True, 3)
         self.inform_to_label = Gtk.Label("Inform to (If any)")
         self.inform_to =Gtk.Entry()
+
+        self.department_list = ["A", "B", "C", "D"]
+        result = auth.Schedule.objects.all().only('owner')
+        completion_department = Gtk.EntryCompletion()
+        self.department_liststore = Gtk.ListStore(str)
+        print(type(result))
+        for text in result:
+            self.department_liststore.append(text.owner)
+
+        completion_department.set_model(self.department_liststore)
+        completion_department.set_text_column(0)
+        self.inform_to.set_completion(completion_department)
+
+
         self.vbox_left.pack_start(self.inform_to_label, True, True, 3)
         self.vbox_left.pack_start(self.inform_to, True, True, 3)
         self.prev_main_label = Gtk.Label("Preventive Maintenance")
@@ -1248,6 +1287,9 @@ class Schedule_service(Gtk.Window):
         self.vbox_right.pack_start(self.equip, True, True, 3)
         self.owner_label = Gtk.Label("PM Owner")
         self.owner = Gtk.Entry()
+
+
+
         self.vbox_right.pack_start(self.owner_label, True, True, 3)
         self.vbox_right.pack_start(self.owner, True, True, 3)
         self.code_label = Gtk.Label("PM Code")
