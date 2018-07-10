@@ -83,8 +83,6 @@ class Main_Window(Gtk.Window):
             dialog_number.destroy()
             return
 
-
-
         else:
             check = newAuth.login(self.username.get_text(), self.password.get_text())
 
@@ -102,8 +100,6 @@ class Main_Window(Gtk.Window):
 
                 dialog_details.destroy()
                 return
-
-
 
     def create_account_clicked(self, widget):
         dialog_new_account = New_account()
@@ -891,7 +887,7 @@ class Assign_list(Gtk.Window):
             dialog_empty_form.destroy()
 
             return
-        new_window = Schedule_service()
+        new_window = Assign_Job()
         new_window.set_position(Gtk.WindowPosition.CENTER)
         new_window.connect("delete-event", Gtk.main_quit)
         new_window.show_all()
@@ -1221,7 +1217,6 @@ class Schedule_service(Gtk.Window):
         section = details.section
         sub_loc = details.sub_loc
 
-
         self.section_label = Gtk.Label("Section")
         self.section = Gtk.Entry()
         self.section.set_text(section)
@@ -1268,9 +1263,6 @@ class Schedule_service(Gtk.Window):
         self.vbox_right.pack_start(self.equip, True, True, 3)
         self.owner_label = Gtk.Label("PM Owner")
         self.owner = Gtk.Entry()
-
-
-
         self.vbox_right.pack_start(self.owner_label, True, True, 3)
         self.vbox_right.pack_start(self.owner, True, True, 3)
         self.code_label = Gtk.Label("PM Code")
