@@ -25,11 +25,6 @@ class Main_Window(Gtk.Window):
         self.title = Gtk.Label()
         self.title.set_markup("<big><big><big><big><big><big><big><big><b>Login Page</b></big></big></big></big></big></big></big></big>")
         self.box.pack_start(self.title, False, False, 40)
-
-
-
-
-
         self.username_label = Gtk.Label()
         self.username_label.set_markup("<big>Username :</big>")
         self.box.pack_start(self.username_label, False, False, 0)
@@ -1243,20 +1238,6 @@ class Schedule_service(Gtk.Window):
         self.vbox_left.pack_start(self.task, True,True, 3)
         self.inform_to_label = Gtk.Label("Inform to (If any)")
         self.inform_to =Gtk.Entry()
-
-        self.department_list = ["A", "B", "C", "D"]
-        result = auth.Schedule.objects.all().only('owner')
-        completion_department = Gtk.EntryCompletion()
-        self.department_liststore = Gtk.ListStore(str)
-        print(type(result))
-        for text in result:
-            self.department_liststore.append(text.owner)
-
-        completion_department.set_model(self.department_liststore)
-        completion_department.set_text_column(0)
-        self.inform_to.set_completion(completion_department)
-
-
         self.vbox_left.pack_start(self.inform_to_label, True, True, 3)
         self.vbox_left.pack_start(self.inform_to, True, True, 3)
         self.prev_main_label = Gtk.Label("Preventive Maintenance")
