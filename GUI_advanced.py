@@ -1245,11 +1245,12 @@ class Schedule_service(Gtk.Window):
         self.inform_to =Gtk.Entry()
 
         self.department_list = ["A", "B", "C", "D"]
-        result = auth.Schedule.objects.filter().values_list('owner')
+        result = auth.Schedule.objects.all().only('owner')
         completion_department = Gtk.EntryCompletion()
         self.department_liststore = Gtk.ListStore(str)
+        print(type(result))
         for text in result:
-            self.department_liststore.append([text])
+            self.department_liststore.append(text.owner)
 
         completion_department.set_model(self.department_liststore)
         completion_department.set_text_column(0)
