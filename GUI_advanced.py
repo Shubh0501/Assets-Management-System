@@ -353,7 +353,7 @@ class Equipment_list(Gtk.Window):
         self.hbox3 = Gtk.Box(orientation = Gtk.Orientation.VERTICAL, spacing = 0)
 
         image = Gtk.Image()
-        image.set_from_file('jusco_titl.jpg')
+        image.set_from_file('')
         self.hbox1.add(image)
         self.hbox1.set_hexpand(True)
         self.hbox1.set_halign(Gtk.Align.CENTER)
@@ -552,7 +552,7 @@ class Schedule_list(Gtk.Window):
         self.hbox3 = Gtk.Box(orientation = Gtk.Orientation.VERTICAL, spacing = 0)
 
         image = Gtk.Image()
-        image.set_from_file('jusco_titl.jpg')
+        image.set_from_file('')
         self.hbox1.add(image)
         self.hbox1.set_hexpand(True)
         self.hbox1.set_halign(Gtk.Align.CENTER)
@@ -757,7 +757,7 @@ class Assign_list(Gtk.Window):
         self.hbox3 = Gtk.Box(orientation = Gtk.Orientation.VERTICAL, spacing = 0)
 
         image = Gtk.Image()
-        image.set_from_file('jusco_titl.jpg')
+        image.set_from_file('')
         self.hbox1.add(image)
         self.hbox1.set_hexpand(True)
         self.hbox1.set_halign(Gtk.Align.CENTER)
