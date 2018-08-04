@@ -13,4 +13,13 @@ PYTHON PACKAGES REQUIRED :
 5. os
 6. MongoEngine
 
-
+PROCESS :
+1. Run GUI_advanced.py
+2. Create a new Profile.
+3. LOGIN using the user id and password provided.
+4. The following menus are currently in working state :
+      1. EQUIPMENTS.
+      2. SCHEDULE SERVICE.
+      3. ASSIGN JOB.
+5. Enter the data in the form accordingly.
+6. 
