@@ -22,4 +22,6 @@ PROCESS :
       2. SCHEDULE SERVICE.
       3. ASSIGN JOB.
 5. Enter the data in the form accordingly.
-6. 
+6. Run Reminder sender, and it will be added as a System Startup operation.
+7. The Software will look for reminders to be sent each time the system starts and send a mail to the responsible person accordingly.
+
